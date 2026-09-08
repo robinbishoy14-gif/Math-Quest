@@ -1133,7 +1133,7 @@ onclick="goHome()">
 <p>
 ⚪ Click anywhere on the board to throw!
 <br>
-The target moves — time your shot carefully!
+The ball flies to the moving target — time your shot!
 </p>
 
 </div>
@@ -1234,7 +1234,7 @@ class="dart-message">
 </div>
 
 <div class="dart-hint">
-🖱️ Move your mouse/finger to aim • CLICK to throw
+🖱️ Move your mouse/finger to aim • CLICK to throw at the moving target
 </div>
 
 </div>
@@ -2501,12 +2501,13 @@ function move(){
 
 if(!dartBusy){
 
-dartMovingTime+=.035;
+dartMovingTime+=.014;
 
 /*
-Fast sliding movement.
+Slower sliding movement.
 Different X/Y speeds make it
-harder to predict.
+harder to predict, but still
+catchable for a bullseye.
 */
 
 dartTargetX=
@@ -2518,14 +2519,14 @@ dartTargetY=
 Math.cos(dartMovingTime*1.67)*.27;
 
 /*
-Additional wobble.
+Additional wobble (gentler now).
 */
 
 dartTargetX+=
-Math.sin(dartMovingTime*5.7)*.055;
+Math.sin(dartMovingTime*5.7)*.03;
 
 dartTargetY+=
-Math.cos(dartMovingTime*4.3)*.045;
+Math.cos(dartMovingTime*4.3)*.025;
 
 dartTargetX=
 Math.max(.08,Math.min(.92,dartTargetX));
@@ -2655,21 +2656,17 @@ document.getElementById("dartMessage");
 
 
 /*
-The moving target pulls
-the shot slightly.
+The ball now flies toward the moving
+target's current position (not the
+mouse/aim position). The aim reticle
+is still shown so the player can see
+where they clicked, but the throw
+itself is anchored on the target.
 */
 
-const targetPull=.18;
+let finalX=dartTargetX;
 
-let finalX=
-dartAimX+
-(dartTargetX-dartAimX)*
-targetPull;
-
-let finalY=
-dartAimY+
-(dartTargetY-dartAimY)*
-targetPull;
+let finalY=dartTargetY;
 
 
 /*
