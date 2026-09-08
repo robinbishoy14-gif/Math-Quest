@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,6 +79,17 @@ box-shadow:0 3px 0 rgba(0,0,0,.15);
 .game4{background:linear-gradient(135deg,#fa8231,#f7b731)}
 .game5{background:linear-gradient(135deg,#eb3b5a,#fc5c65)}
 .game6{background:linear-gradient(135deg,#3867d6,#45aaf2)}
+
+.game7{
+background:linear-gradient(135deg,#ff1493,#ff6b00,#ffd32a);
+animation:dartButton 2s infinite alternate;
+}
+
+@keyframes dartButton{
+from{box-shadow:0 7px 0 rgba(0,0,0,.15)}
+to{box-shadow:0 7px 0 rgba(255,20,147,.45),0 0 20px rgba(255,211,42,.4)}
+}
+
 .study{background:linear-gradient(135deg,#10ac84,#1dd1a1)}
 .progress{background:linear-gradient(135deg,#3742fa,#5352ed)}
 
@@ -93,13 +103,9 @@ font-weight:bold;
 font-size:16px;
 }
 
-.player-screen{
-text-align:center;
-}
+.player-screen{text-align:center}
 
-.player-screen h2{
-font-size:32px;
-}
+.player-screen h2{font-size:32px}
 
 .player-name{
 text-align:center;
@@ -151,9 +157,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
-.name-box{
-margin-top:20px;
-}
+.name-box{margin-top:20px}
 
 .name-input{
 width:100%;
@@ -164,9 +168,7 @@ font-size:20px;
 outline:0;
 }
 
-.name-input:focus{
-border-color:#6c63ff;
-}
+.name-input:focus{border-color:#6c63ff}
 
 .save-name{
 width:100%;
@@ -379,6 +381,482 @@ margin:10px;
 font-weight:bold;
 }
 
+
+/* =========================
+   DART GAME
+========================= */
+
+.dart-card{
+background:
+linear-gradient(145deg,#fff,#fff8fb,#f2ffff);
+overflow:hidden;
+}
+
+.dart-header{
+text-align:center;
+}
+
+.dart-header h2{
+font-size:36px;
+margin:5px 0;
+background:linear-gradient(90deg,#ff1493,#ff6b00,#6c63ff);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.dart-header p{
+font-weight:bold;
+color:#666;
+}
+
+.dart-stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin:15px 0;
+}
+
+.dart-stat{
+border-radius:17px;
+padding:12px;
+text-align:center;
+background:linear-gradient(135deg,#fff0f7,#eefcff);
+border:2px solid #eee;
+font-weight:bold;
+}
+
+.dart-stat span{
+display:block;
+font-size:27px;
+color:#ff1493;
+margin-top:4px;
+}
+
+
+/* BOARD */
+
+.dart-area{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:15px 0 25px;
+}
+
+.dart-board{
+width:min(90vw,520px);
+aspect-ratio:1;
+border-radius:50%;
+position:relative;
+cursor:crosshair;
+user-select:none;
+touch-action:none;
+
+background:
+radial-gradient(
+circle,
+#ff315b 0%,
+#ff315b 11%,
+#ffd32a 11.5%,
+#ffd32a 19%,
+#2ed573 19.5%,
+#2ed573 31%,
+#ff4757 31.5%,
+#ff4757 45%,
+#3742fa 45.5%,
+#3742fa 62%,
+#ff9f43 62.5%,
+#ff9f43 78%,
+#20bf6b 78.5%,
+#20bf6b 100%
+);
+
+border:12px solid #202040;
+
+box-shadow:
+0 12px 0 #11152a,
+0 18px 30px rgba(0,0,0,.3),
+inset 0 0 0 6px #fff;
+
+overflow:hidden;
+}
+
+
+/* numbered zones */
+
+.dart-number{
+position:absolute;
+font-weight:1000;
+font-size:clamp(22px,6vw,42px);
+color:white;
+text-shadow:
+3px 3px 0 #202040,
+-2px -2px 0 #202040;
+z-index:5;
+pointer-events:none;
+}
+
+.dart-10{
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:clamp(32px,8vw,62px);
+}
+
+.dart-5{
+left:50%;
+top:25%;
+transform:translate(-50%,-50%);
+}
+
+.dart-3{
+left:50%;
+top:69%;
+transform:translate(-50%,-50%);
+}
+
+.dart-0{
+left:50%;
+top:91%;
+transform:translate(-50%,-50%);
+}
+
+
+/* board lines */
+
+.dart-ring{
+position:absolute;
+border-radius:50%;
+border:5px solid rgba(255,255,255,.8);
+pointer-events:none;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+}
+
+.dart-ring.r1{
+width:22%;
+height:22%;
+}
+
+.dart-ring.r2{
+width:40%;
+height:40%;
+}
+
+.dart-ring.r3{
+width:64%;
+height:64%;
+}
+
+.dart-ring.r4{
+width:82%;
+height:82%;
+border:4px solid rgba(255,255,255,.65);
+}
+
+
+/* center bull */
+
+.bull{
+position:absolute;
+left:50%;
+top:50%;
+width:17%;
+height:17%;
+border-radius:50%;
+transform:translate(-50%,-50%);
+background:
+radial-gradient(
+circle at 35% 30%,
+#fff,
+#ffd32a 25%,
+#ff6b00 65%,
+#ff1493
+);
+border:5px solid white;
+box-shadow:0 0 20px rgba(255,20,147,.7);
+z-index:3;
+}
+
+
+/* moving target */
+
+.moving-target{
+position:absolute;
+width:60px;
+height:60px;
+border-radius:50%;
+border:5px dashed white;
+box-shadow:0 0 0 4px #ff1493,0 0 20px #ff1493;
+transform:translate(-50%,-50%);
+z-index:10;
+pointer-events:none;
+transition:left .06s linear,top .06s linear;
+}
+
+.moving-target::after{
+content:"";
+position:absolute;
+width:12px;
+height:12px;
+background:white;
+border-radius:50%;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+}
+
+
+/* ball */
+
+.dart-ball{
+position:absolute;
+width:34px;
+height:34px;
+border-radius:50%;
+
+background:
+radial-gradient(
+circle at 30% 25%,
+white 0%,
+#eee 15%,
+#777 45%,
+#222 100%
+);
+
+border:3px solid white;
+
+box-shadow:
+0 5px 10px rgba(0,0,0,.5),
+0 0 12px rgba(255,255,255,.6);
+
+left:50%;
+top:108%;
+
+transform:translate(-50%,-50%);
+
+z-index:20;
+
+pointer-events:none;
+}
+
+
+/* aim */
+
+.dart-aim{
+position:absolute;
+width:42px;
+height:42px;
+border:4px solid white;
+border-radius:50%;
+transform:translate(-50%,-50%);
+z-index:15;
+pointer-events:none;
+box-shadow:
+0 0 0 3px #ff1493,
+0 0 15px #fff;
+}
+
+.dart-aim:before,
+.dart-aim:after{
+content:"";
+position:absolute;
+background:white;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+}
+
+.dart-aim:before{
+width:58px;
+height:3px;
+}
+
+.dart-aim:after{
+width:3px;
+height:58px;
+}
+
+
+/* POWER */
+
+.power-title{
+text-align:center;
+font-weight:1000;
+font-size:20px;
+margin-top:5px;
+}
+
+.dart-power{
+height:22px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+border:3px solid white;
+box-shadow:inset 0 2px 5px #0003;
+}
+
+.dart-power-fill{
+height:100%;
+width:50%;
+background:
+linear-gradient(
+90deg,
+#20bf6b,
+#ffd32a,
+#ff6b00,
+#ff1493
+);
+transition:width .04s linear;
+}
+
+
+/* message */
+
+.dart-message{
+text-align:center;
+font-size:28px;
+font-weight:1000;
+min-height:42px;
+margin:12px;
+color:#ff1493;
+}
+
+.dart-hint{
+text-align:center;
+font-weight:bold;
+color:#666;
+margin-bottom:10px;
+}
+
+
+/* result table */
+
+.dart-final{
+text-align:center;
+}
+
+.dart-final h2{
+font-size:34px;
+color:#ff1493;
+}
+
+.dart-total{
+font-size:40px;
+font-weight:1000;
+background:linear-gradient(135deg,#fff1a8,#ffd32a);
+padding:18px;
+border-radius:20px;
+margin:15px 0;
+}
+
+.dart-table{
+width:100%;
+border-collapse:separate;
+border-spacing:0;
+overflow:hidden;
+border-radius:18px;
+box-shadow:0 5px 15px #0002;
+background:white;
+}
+
+.dart-table th{
+background:linear-gradient(135deg,#6c63ff,#ff1493);
+color:white;
+padding:15px 8px;
+font-size:15px;
+}
+
+.dart-table td{
+padding:15px 8px;
+font-size:20px;
+font-weight:bold;
+border-bottom:1px solid #eee;
+}
+
+.dart-table tr:last-child td{
+border-bottom:0;
+}
+
+.dart-table tr:nth-child(even){
+background:#f7f7ff;
+}
+
+.dart-final-buttons{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.dart-action{
+border:0;
+border-radius:16px;
+padding:15px 25px;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+color:white;
+background:linear-gradient(135deg,#ff1493,#ff6b00);
+box-shadow:0 5px 0 #b51b62;
+}
+
+.dart-action:active{
+transform:translateY(3px);
+box-shadow:0 2px 0 #b51b62;
+}
+
+
+/* flying animation */
+
+@keyframes ballSpin{
+from{transform:translate(-50%,-50%) rotate(0deg)}
+to{transform:translate(-50%,-50%) rotate(720deg)}
+}
+
+.dart-ball.flying{
+animation:ballSpin .55s linear;
+}
+
+
+/* hit effect */
+
+.dart-hit{
+position:absolute;
+z-index:30;
+font-size:28px;
+font-weight:1000;
+color:white;
+text-shadow:2px 2px #202040;
+pointer-events:none;
+animation:hitPop .7s forwards;
+}
+
+@keyframes hitPop{
+0%{
+opacity:1;
+transform:translate(-50%,-50%) scale(.6);
+}
+100%{
+opacity:0;
+transform:translate(-50%,-120%) scale(1.4);
+}
+}
+
+
+/* pulse board */
+
+.dart-board.playing{
+animation:boardPulse 1.2s infinite alternate;
+}
+
+@keyframes boardPulse{
+from{box-shadow:0 12px 0 #11152a,0 18px 30px rgba(0,0,0,.3),inset 0 0 0 6px #fff}
+to{box-shadow:0 12px 0 #11152a,0 18px 40px rgba(255,20,147,.35),inset 0 0 0 6px #fff}
+}
+
+
 @media(max-width:650px){
 
 header h1{font-size:34px}
@@ -401,6 +879,28 @@ font-size:42px;
 
 .table-buttons{
 grid-template-columns:repeat(3,1fr);
+}
+
+.dart-stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+.dart-header h2{
+font-size:29px;
+}
+
+.dart-table th{
+font-size:11px;
+padding:10px 4px;
+}
+
+.dart-table td{
+font-size:17px;
+padding:12px 4px;
+}
+
+.dart-board{
+width:min(94vw,500px);
 }
 
 }
@@ -467,6 +967,13 @@ onclick="choosePlayer('speed')">
 🚀 Speed Round
 <br>
 <small>Super fast questions</small>
+</button>
+
+<button class="big-button game7"
+onclick="choosePlayer('dart')">
+🎯⚪ DART BALL
+<br>
+<small>10 balls • 10 / 5 / 3 / 0</small>
 </button>
 
 <button class="big-button study"
@@ -539,7 +1046,7 @@ Cancel
 </div>
 
 
-<!-- GAME -->
+<!-- NORMAL GAME -->
 
 <div id="game" class="card hidden">
 
@@ -610,10 +1117,197 @@ class="message">
 </div>
 
 
+<!-- DART GAME -->
+
+<div id="dartGame" class="card hidden dart-card">
+
+<button class="back"
+onclick="goHome()">
+⬅ Back
+</button>
+
+<div class="dart-header">
+
+<h2>🎯 DART BALL CHALLENGE</h2>
+
+<p>
+⚪ Click anywhere on the board to throw!
+<br>
+The target moves — time your shot carefully!
+</p>
+
+</div>
+
+<div class="player-name">
+👤 <span id="dartPlayer"></span>
+</div>
+
+<div class="dart-stats">
+
+<div class="dart-stat">
+🎯 BALL
+<span id="dartThrow">1 / 10</span>
+</div>
+
+<div class="dart-stat">
+⭐ SCORE
+<span id="dartScore">0</span>
+</div>
+
+<div class="dart-stat">
+🔥 STREAK
+<span id="dartStreak">0</span>
+</div>
+
+<div class="dart-stat">
+💨 WIND
+<span id="dartWind">0</span>
+</div>
+
+</div>
+
+
+<div class="dart-area">
+
+<div
+id="dartBoard"
+class="dart-board playing">
+
+<div class="dart-ring r1"></div>
+<div class="dart-ring r2"></div>
+<div class="dart-ring r3"></div>
+<div class="dart-ring r4"></div>
+
+<div class="bull"></div>
+
+<div class="dart-number dart-10">
+10
+</div>
+
+<div class="dart-number dart-5">
+5
+</div>
+
+<div class="dart-number dart-3">
+3
+</div>
+
+<div class="dart-number dart-0">
+0
+</div>
+
+<div
+id="dartTarget"
+class="moving-target">
+</div>
+
+<div
+id="dartAim"
+class="dart-aim">
+</div>
+
+<div
+id="dartBall"
+class="dart-ball">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="power-title">
+💪 THROW POWER
+</div>
+
+<div class="dart-power">
+<div
+id="dartPower"
+class="dart-power-fill">
+</div>
+</div>
+
+<div
+id="dartMessage"
+class="dart-message">
+🎯 AIM!
+</div>
+
+<div class="dart-hint">
+🖱️ Move your mouse/finger to aim • CLICK to throw
+</div>
+
+</div>
+
+
+<!-- DART RESULT -->
+
+<div id="dartResult" class="card hidden">
+
+<div class="dart-final">
+
+<h1>🏆 DART GAME COMPLETE!</h1>
+
+<p>
+👤 <b id="dartResultPlayer"></b>
+</p>
+
+<div class="dart-total">
+⭐ TOTAL SCORE:
+<span id="dartFinalScore">0</span>
+</div>
+
+<table class="dart-table">
+
+<thead>
+
+<tr>
+<th>SCORE<br>(POINTS)</th>
+
+<th>COUNT<br>(BALLS)</th>
+
+<th>TOTAL SCORE<br>(POINTS)</th>
+</tr>
+
+</thead>
+
+<tbody id="dartRows">
+</tbody>
+
+</table>
+
+<p id="dartBestText"
+style="font-size:22px;font-weight:bold">
+</p>
+
+<div id="dartRecord"
+class="badge">
+</div>
+
+<div class="dart-final-buttons">
+
+<button
+class="dart-action"
+onclick="playDartAgain()">
+🎯 Play Again
+</button>
+
+<button
+class="dart-action"
+onclick="goHome()">
+🏠 Home
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
 <!-- STUDY -->
 
-<div id="study"
-class="card hidden">
+<div id="study" class="card hidden">
 
 <button class="back"
 onclick="goHome()">
@@ -636,8 +1330,7 @@ class="table-buttons">
 
 <!-- PROGRESS -->
 
-<div id="progressPage"
-class="card hidden">
+<div id="progressPage" class="card hidden">
 
 <button class="back"
 onclick="goHome()">
@@ -656,10 +1349,9 @@ class="champion">
 </div>
 
 
-<!-- RESULT -->
+<!-- NORMAL RESULT -->
 
-<div id="result"
-class="card hidden">
+<div id="result" class="card hidden">
 
 <div class="result">
 
@@ -697,31 +1389,64 @@ onclick="goHome()">
 <script>
 
 /* =========================
-   VARIABLES
+VARIABLES
 ========================= */
 
-let currentPlayer = "";
-let selectedGame = "";
+let currentPlayer="";
+let selectedGame="";
 
-let score = 0;
-let streak = 0;
-let lives = 3;
+let score=0;
+let streak=0;
+let lives=3;
 
-let questionNumber = 0;
-let correctAnswer = 0;
+let questionNumber=0;
+let correctAnswer=0;
 
-let timeLeft = 60;
+let timeLeft=60;
 
-let timerInterval = null;
+let timerInterval=null;
 
-let answering = false;
+let answering=false;
 
 
 /* =========================
-   GAME INFO
+DART VARIABLES
 ========================= */
 
-const gameInfo = {
+let dartThrow=1;
+let dartScore=0;
+let dartStreak=0;
+
+let dartCounts={
+10:0,
+5:0,
+3:0,
+0:0
+};
+
+let dartBusy=false;
+let dartPowerValue=50;
+let dartPowerDirection=1;
+
+let dartAnimation=null;
+let dartPowerTimer=null;
+
+let dartTargetX=.5;
+let dartTargetY=.5;
+
+let dartAimX=.5;
+let dartAimY=.5;
+
+let dartWind=0;
+
+let dartMovingTime=0;
+
+
+/* =========================
+GAME INFO
+========================= */
+
+const gameInfo={
 
 quick:{
 title:"🎯 Quick Game",
@@ -757,13 +1482,19 @@ speed:{
 title:"🚀 Speed Round",
 description:"You only have 5 seconds!",
 questions:15
+},
+
+dart:{
+title:"🎯 Dart Ball",
+description:"10 throws — hit 10, 5, 3 or 0!",
+questions:10
 }
 
 };
 
 
 /* =========================
-   STORAGE
+STORAGE
 ========================= */
 
 function getPlayers(){
@@ -794,7 +1525,7 @@ JSON.stringify(players)
 
 
 /* =========================
-   PLAYER SELECT
+PLAYER SELECT
 ========================= */
 
 function choosePlayer(game){
@@ -802,6 +1533,8 @@ function choosePlayer(game){
 selectedGame=game;
 
 clearInterval(timerInterval);
+
+stopDart();
 
 hideAll();
 
@@ -883,7 +1616,15 @@ button.onclick=function(){
 
 currentPlayer=name;
 
+if(selectedGame==="dart"){
+
+startDartGame();
+
+}else{
+
 startGame();
+
+}
 
 };
 
@@ -895,7 +1636,7 @@ list.appendChild(button);
 
 
 /* =========================
-   NEW PLAYER
+NEW PLAYER
 ========================= */
 
 function showNewPlayer(){
@@ -939,11 +1680,7 @@ return;
 
 }
 
-
 const players=getPlayers();
-
-
-/* Existing name */
 
 const existing=
 Object.keys(players).find(
@@ -954,19 +1691,23 @@ name.toLowerCase();
 
 });
 
-
 if(existing){
 
 currentPlayer=existing;
 
+if(selectedGame==="dart"){
+
+startDartGame();
+
+}else{
+
 startGame();
+
+}
 
 return;
 
 }
-
-
-/* SAVE NAME */
 
 players[name]=0;
 
@@ -974,12 +1715,18 @@ savePlayers(players);
 
 currentPlayer=name;
 
+if(selectedGame==="dart"){
+
+startDartGame();
+
+}else{
+
 startGame();
 
 }
 
+}
 
-/* ENTER KEY */
 
 document
 .getElementById("nameInput")
@@ -997,12 +1744,14 @@ createPlayer();
 
 
 /* =========================
-   START GAME
+START NORMAL GAME
 ========================= */
 
 function startGame(){
 
 clearInterval(timerInterval);
+
+stopDart();
 
 score=0;
 streak=0;
@@ -1046,9 +1795,6 @@ document
 
 updateStats();
 
-
-/* TIME */
-
 if(selectedGame==="time"){
 
 document
@@ -1077,15 +1823,11 @@ endGame();
 
 }
 
-
-/* SPEED */
-
 if(selectedGame==="speed"){
 
 startSpeedTimer();
 
 }
-
 
 nextQuestion();
 
@@ -1093,15 +1835,12 @@ nextQuestion();
 
 
 /* =========================
-   NEXT QUESTION
+NEXT QUESTION
 ========================= */
 
 function nextQuestion(){
 
 if(answering)return;
-
-
-/* limits */
 
 if(
 selectedGame==="quick" &&
@@ -1114,7 +1853,6 @@ return;
 
 }
 
-
 if(
 selectedGame==="missing" &&
 questionNumber>=20
@@ -1125,7 +1863,6 @@ endGame();
 return;
 
 }
-
 
 if(
 selectedGame==="streak" &&
@@ -1138,7 +1875,6 @@ return;
 
 }
 
-
 if(
 selectedGame==="battle" &&
 questionNumber>=20
@@ -1149,7 +1885,6 @@ endGame();
 return;
 
 }
-
 
 if(
 selectedGame==="speed" &&
@@ -1162,7 +1897,6 @@ return;
 
 }
 
-
 if(lives<=0){
 
 endGame();
@@ -1171,11 +1905,9 @@ return;
 
 }
 
-
 questionNumber++;
 
 answering=false;
-
 
 if(selectedGame==="missing"){
 
@@ -1187,14 +1919,13 @@ makeNormalQuestion();
 
 }
 
-
 updateProgress();
 
 }
 
 
 /* =========================
-   NORMAL QUESTION
+NORMAL QUESTION
 ========================= */
 
 function makeNormalQuestion(){
@@ -1228,7 +1959,7 @@ createAnswers();
 
 
 /* =========================
-   MISSING NUMBER
+MISSING
 ========================= */
 
 function makeMissingQuestion(){
@@ -1238,7 +1969,6 @@ Math.floor(Math.random()*11);
 
 const b=
 Math.floor(Math.random()*11);
-
 
 if(Math.random()<0.5){
 
@@ -1260,14 +1990,13 @@ document
 
 }
 
-
 createAnswers();
 
 }
 
 
 /* =========================
-   ANSWERS
+ANSWERS
 ========================= */
 
 function createAnswers(){
@@ -1281,7 +2010,6 @@ const choices=[
 correctAnswer
 ];
 
-
 while(choices.length<4){
 
 const difference=
@@ -1290,7 +2018,6 @@ Math.random()*8
 )+1;
 
 let random;
-
 
 if(Math.random()<0.5){
 
@@ -1309,7 +2036,6 @@ difference
 
 }
 
-
 if(!choices.includes(random)){
 
 choices.push(random);
@@ -1318,11 +2044,9 @@ choices.push(random);
 
 }
 
-
 choices.sort(
 ()=>Math.random()-.5
 );
-
 
 choices.forEach(function(answer){
 
@@ -1351,7 +2075,7 @@ container.appendChild(button);
 
 
 /* =========================
-   CHECK ANSWER
+CHECK ANSWER
 ========================= */
 
 function checkAnswer(answer,button){
@@ -1359,7 +2083,6 @@ function checkAnswer(answer,button){
 if(answering)return;
 
 answering=true;
-
 
 document
 .querySelectorAll(".answer")
@@ -1369,16 +2092,13 @@ btn.disabled=true;
 
 });
 
-
 if(answer===correctAnswer){
 
 button.classList.add("correct");
 
 streak++;
 
-
 let points=10;
-
 
 if(selectedGame==="quick"){
 points=10+streak;
@@ -1404,9 +2124,7 @@ if(selectedGame==="time"){
 points=10+streak;
 }
 
-
 score+=points;
-
 
 document
 .getElementById("message")
@@ -1421,7 +2139,6 @@ button.classList.add("wrong");
 
 streak=0;
 
-
 if(
 selectedGame==="quick" ||
 selectedGame==="missing" ||
@@ -1433,7 +2150,6 @@ lives--;
 
 }
 
-
 document
 .getElementById("message")
 .textContent=
@@ -1443,20 +2159,15 @@ playSound(false);
 
 }
 
-
 updateStats();
 
 showStreak();
-
-
-/* WAIT THEN NEXT QUESTION */
 
 setTimeout(function(){
 
 document
 .getElementById("message")
 .textContent="";
-
 
 if(lives<=0){
 
@@ -1466,11 +2177,7 @@ return;
 
 }
 
-
 answering=false;
-
-
-/* SPEED TIMER RESET */
 
 if(selectedGame==="speed"){
 
@@ -1478,9 +2185,7 @@ startSpeedTimer();
 
 }
 
-
 nextQuestion();
-
 
 },700);
 
@@ -1488,7 +2193,7 @@ nextQuestion();
 
 
 /* =========================
-   SPEED TIMER
+SPEED TIMER
 ========================= */
 
 function startSpeedTimer(){
@@ -1501,7 +2206,6 @@ document
 .getElementById("timer")
 .textContent=5;
 
-
 timerInterval=
 setInterval(function(){
 
@@ -1513,7 +2217,6 @@ document
 .getElementById("timer")
 .textContent=
 timeLeft;
-
 
 if(timeLeft<=0){
 
@@ -1533,7 +2236,6 @@ document
 updateStats();
 
 playSound(false);
-
 
 setTimeout(function(){
 
@@ -1561,14 +2263,13 @@ nextQuestion();
 
 
 /* =========================
-   STREAK DISPLAY
+STREAK
 ========================= */
 
 function showStreak(){
 
 const fire=
 document.getElementById("streakFire");
-
 
 if(streak>=10){
 
@@ -1590,7 +2291,7 @@ fire.textContent="";
 
 
 /* =========================
-   STATS
+STATS
 ========================= */
 
 function updateStats(){
@@ -1612,7 +2313,6 @@ lives>0
 ?"❤️".repeat(lives)
 :"💔";
 
-
 if(
 selectedGame!=="time" &&
 selectedGame!=="speed"
@@ -1629,7 +2329,7 @@ document
 
 
 /* =========================
-   PROGRESS
+PROGRESS
 ========================= */
 
 function updateProgress(){
@@ -1643,7 +2343,6 @@ document
 return;
 
 }
-
 
 const total=
 gameInfo[selectedGame].questions;
@@ -1662,15 +2361,659 @@ percent,
 }
 
 
-/* =========================
-   END GAME
-========================= */
+/* ==================================================
+DART GAME
+================================================== */
 
-function endGame(){
+function startDartGame(){
 
 clearInterval(timerInterval);
 
-answering=true;
+stopDart();
+
+dartThrow=1;
+dartScore=0;
+dartStreak=0;
+
+dartCounts={
+10:0,
+5:0,
+3:0,
+0:0
+};
+
+dartBusy=false;
+
+dartPowerValue=50;
+dartPowerDirection=1;
+
+dartAimX=.5;
+dartAimY=.5;
+
+dartTargetX=.5;
+dartTargetY=.5;
+
+dartMovingTime=0;
+
+hideAll();
+
+document
+.getElementById("dartGame")
+.classList.remove("hidden");
+
+document
+.getElementById("dartPlayer")
+.textContent=
+currentPlayer;
+
+document
+.getElementById("dartThrow")
+.textContent=
+"1 / 10";
+
+document
+.getElementById("dartScore")
+.textContent="0";
+
+document
+.getElementById("dartStreak")
+.textContent="0";
+
+document
+.getElementById("dartMessage")
+.textContent=
+"🎯 AIM!";
+
+document
+.getElementById("dartBall")
+.style.left="50%";
+
+document
+.getElementById("dartBall")
+.style.top="108%";
+
+document
+.getElementById("dartBall")
+.classList.remove("flying");
+
+document
+.getElementById("dartBoard")
+.classList.add("playing");
+
+setRandomWind();
+
+startDartPower();
+
+startDartMovement();
+
+}
+
+
+/* =========================
+DART POWER
+========================= */
+
+function startDartPower(){
+
+clearInterval(dartPowerTimer);
+
+dartPowerTimer=
+setInterval(function(){
+
+if(dartBusy)return;
+
+dartPowerValue+=
+dartPowerDirection*2.1;
+
+if(dartPowerValue>=100){
+
+dartPowerValue=100;
+dartPowerDirection=-1;
+
+}
+
+if(dartPowerValue<=8){
+
+dartPowerValue=8;
+dartPowerDirection=1;
+
+}
+
+document
+.getElementById("dartPower")
+.style.width=
+dartPowerValue+"%";
+
+},40);
+
+}
+
+
+/* =========================
+DART MOVING TARGET
+========================= */
+
+function startDartMovement(){
+
+cancelAnimationFrame(dartAnimation);
+
+function move(){
+
+if(!dartBusy){
+
+dartMovingTime+=.035;
+
+/*
+Fast sliding movement.
+Different X/Y speeds make it
+harder to predict.
+*/
+
+dartTargetX=
+.5+
+Math.sin(dartMovingTime*2.2)*.31;
+
+dartTargetY=
+.5+
+Math.cos(dartMovingTime*1.67)*.27;
+
+/*
+Additional wobble.
+*/
+
+dartTargetX+=
+Math.sin(dartMovingTime*5.7)*.055;
+
+dartTargetY+=
+Math.cos(dartMovingTime*4.3)*.045;
+
+dartTargetX=
+Math.max(.08,Math.min(.92,dartTargetX));
+
+dartTargetY=
+Math.max(.08,Math.min(.92,dartTargetY));
+
+const target=
+document.getElementById("dartTarget");
+
+target.style.left=
+dartTargetX*100+"%";
+
+target.style.top=
+dartTargetY*100+"%";
+
+}
+
+dartAnimation=
+requestAnimationFrame(move);
+
+}
+
+move();
+
+}
+
+
+/* =========================
+DART AIM
+========================= */
+
+function dartAim(event){
+
+if(dartBusy)return;
+
+const board=
+document.getElementById("dartBoard");
+
+const rect=
+board.getBoundingClientRect();
+
+dartAimX=
+(event.clientX-rect.left)/
+rect.width;
+
+dartAimY=
+(event.clientY-rect.top)/
+rect.height;
+
+dartAimX=
+Math.max(
+.04,
+Math.min(.96,dartAimX)
+);
+
+dartAimY=
+Math.max(
+.04,
+Math.min(.96,dartAimY)
+);
+
+const aim=
+document.getElementById("dartAim");
+
+aim.style.left=
+dartAimX*100+"%";
+
+aim.style.top=
+dartAimY*100+"%";
+
+}
+
+
+/* =========================
+CLICK BOARD = THROW
+========================= */
+
+document
+.getElementById("dartBoard")
+.addEventListener(
+"pointermove",
+function(event){
+
+dartAim(event);
+
+});
+
+
+document
+.getElementById("dartBoard")
+.addEventListener(
+"pointerdown",
+function(event){
+
+event.preventDefault();
+
+if(dartBusy)return;
+
+dartAim(event);
+
+throwDartBall();
+
+});
+
+
+/* =========================
+THROW
+========================= */
+
+function throwDartBall(){
+
+if(dartBusy)return;
+
+if(dartThrow>10)return;
+
+dartBusy=true;
+
+const board=
+document.getElementById("dartBoard");
+
+const ball=
+document.getElementById("dartBall");
+
+const message=
+document.getElementById("dartMessage");
+
+
+/*
+The moving target pulls
+the shot slightly.
+*/
+
+const targetPull=.18;
+
+let finalX=
+dartAimX+
+(dartTargetX-dartAimX)*
+targetPull;
+
+let finalY=
+dartAimY+
+(dartTargetY-dartAimY)*
+targetPull;
+
+
+/*
+Wind.
+*/
+
+finalX+=
+dartWind*
+.004*
+(dartPowerValue/100);
+
+finalY+=
+Math.sin(dartMovingTime)*
+.015*
+(dartPowerValue/100);
+
+
+/*
+Power affects accuracy.
+High power is harder.
+*/
+
+const powerError=
+(dartPowerValue-50)*
+.0009;
+
+finalX+=
+Math.sin(dartMovingTime*8.1)*
+powerError;
+
+finalY+=
+Math.cos(dartMovingTime*7.2)*
+powerError;
+
+
+/*
+Clamp.
+*/
+
+finalX=
+Math.max(.015,Math.min(.985,finalX));
+
+finalY=
+Math.max(.015,Math.min(.985,finalY));
+
+
+message.textContent=
+"⚪ THROWING...";
+
+
+/*
+Ball starts from bottom.
+*/
+
+ball.style.transition=
+"left .58s cubic-bezier(.15,.8,.25,1),top .58s cubic-bezier(.15,.8,.25,1)";
+
+ball.style.left="50%";
+ball.style.top="108%";
+
+ball.classList.remove("flying");
+
+void ball.offsetWidth;
+
+ball.classList.add("flying");
+
+
+setTimeout(function(){
+
+ball.style.left=
+finalX*100+"%";
+
+ball.style.top=
+finalY*100+"%";
+
+},20);
+
+
+setTimeout(function(){
+
+calculateDartHit(
+finalX,
+finalY
+);
+
+},650);
+
+}
+
+
+/* =========================
+CALCULATE HIT
+========================= */
+
+function calculateDartHit(x,y){
+
+const dx=x-.5;
+const dy=y-.5;
+
+const distance=
+Math.sqrt(
+dx*dx+
+dy*dy
+);
+
+
+/*
+Scoring:
+
+CENTER = 10
+NEXT = 5
+NEXT = 3
+OUTSIDE = 0
+*/
+
+let points=0;
+
+if(distance<=.105){
+
+points=10;
+
+}else if(distance<=.205){
+
+points=5;
+
+}else if(distance<=.325){
+
+points=3;
+
+}else{
+
+points=0;
+
+}
+
+
+dartCounts[points]++;
+
+dartScore+=points;
+
+
+/*
+Streak.
+*/
+
+if(points>0){
+
+dartStreak++;
+
+}else{
+
+dartStreak=0;
+
+}
+
+
+/*
+Update UI.
+*/
+
+document
+.getElementById("dartScore")
+.textContent=
+dartScore;
+
+document
+.getElementById("dartStreak")
+.textContent=
+dartStreak;
+
+
+/*
+Message.
+*/
+
+let text="";
+
+if(points===10){
+
+text=
+"🎯🎯 BULLSEYE! +10 🎯🎯";
+
+playSound(true);
+
+}else if(points===5){
+
+text=
+"🔥 AMAZING! +5";
+
+playSound(true);
+
+}else if(points===3){
+
+text=
+"⭐ NICE HIT! +3";
+
+playSound(true);
+
+}else{
+
+text=
+"💨 MISS! +0";
+
+playSound(false);
+
+}
+
+document
+.getElementById("dartMessage")
+.textContent=
+text;
+
+
+/*
+Hit popup.
+*/
+
+createDartHit(
+x,
+y,
+points
+);
+
+
+/*
+Next ball.
+*/
+
+dartThrow++;
+
+document
+.getElementById("dartThrow")
+.textContent=
+dartThrow<=10
+?dartThrow+" / 10"
+:"10 / 10";
+
+
+setTimeout(function(){
+
+if(dartThrow>10){
+
+finishDartGame();
+
+}else{
+
+dartBusy=false;
+
+setRandomWind();
+
+document
+.getElementById("dartMessage")
+.textContent=
+"🎯 AIM!";
+
+}
+
+},650);
+
+}
+
+
+/* =========================
+HIT POPUP
+========================= */
+
+function createDartHit(x,y,points){
+
+const board=
+document.getElementById("dartBoard");
+
+const pop=
+document.createElement("div");
+
+pop.className="dart-hit";
+
+pop.textContent=
+points===10
+?"🎯 +10"
+:points===5
+?"🔥 +5"
+:points===3
+?"⭐ +3"
+:"💨 MISS";
+
+pop.style.left=
+x*100+"%";
+
+pop.style.top=
+y*100+"%";
+
+board.appendChild(pop);
+
+setTimeout(function(){
+
+pop.remove();
+
+},750);
+
+}
+
+
+/* =========================
+WIND
+========================= */
+
+function setRandomWind(){
+
+dartWind=
+Math.floor(
+Math.random()*13
+)-6;
+
+document
+.getElementById("dartWind")
+.textContent=
+dartWind>0
+?"+"
++dartWind
+:dartWind;
+
+}
+
+
+/* =========================
+DART END
+========================= */
+
+function finishDartGame(){
+
+dartBusy=true;
+
+clearInterval(dartPowerTimer);
+
+cancelAnimationFrame(dartAnimation);
+
+document
+.getElementById("dartBoard")
+.classList.remove("playing");
+
+document
+.getElementById("dartMessage")
+.textContent=
+"🏆 ALL 10 BALLS THROWN!";
 
 const players=getPlayers();
 
@@ -1678,83 +3021,122 @@ const oldBest=
 players[currentPlayer]||0;
 
 const newRecord=
-score>oldBest;
+dartScore>oldBest;
 
+
+/*
+Save best.
+*/
 
 if(newRecord){
 
-players[currentPlayer]=score;
+players[currentPlayer]=dartScore;
 
 savePlayers(players);
 
 }
 
 
+/*
+Result.
+*/
+
+setTimeout(function(){
+
 hideAll();
 
 document
-.getElementById("result")
+.getElementById("dartResult")
 .classList.remove("hidden");
 
+document
+.getElementById("dartResultPlayer")
+.textContent=
+currentPlayer;
 
 document
-.getElementById("resultText")
-.innerHTML=`
+.getElementById("dartFinalScore")
+.textContent=
+dartScore;
 
-<p>
-👤
-<b>${escapeHTML(currentPlayer)}</b>
-</p>
-
-<p>
-🎮
-${gameInfo[selectedGame].title}
-</p>
-
-<p>
-⭐ Score:
-<b>${score}</b>
-</p>
-
-<p>
-🏆 Personal Best:
-<b>${Math.max(
-score,
+document
+.getElementById("dartBestText")
+.innerHTML=
+"🏆 Personal Best: "+
+Math.max(
+dartScore,
 oldBest
-)}</b>
-</p>
+)+
+" points";
 
-<p>
-🔥 Final Streak:
-<b>${streak}</b>
-</p>
-
-`;
-
-
-if(newRecord){
 
 document
-.getElementById("badge")
-.innerHTML=`
+.getElementById("dartRecord")
+.innerHTML=
+newRecord
+?"👑 NEW RECORD!"
+:"💪 BEAT YOUR SCORE!";
 
-<span class="badge">
-👑 NEW RECORD!
-</span>
-
-`;
-
-}else{
 
 document
-.getElementById("badge")
-.innerHTML=`
+.getElementById("dartRows")
+.innerHTML=
 
-<span class="badge">
-💪 KEEP PRACTICING!
-</span>
+[10,5,3,0]
+
+.map(function(points){
+
+return `
+
+<tr>
+
+<td>${points}</td>
+
+<td>${dartCounts[points]}</td>
+
+<td>${points*dartCounts[points]}</td>
+
+</tr>
 
 `;
+
+})
+.join("");
+
+},800);
+
+}
+
+
+/* =========================
+DART REPLAY
+========================= */
+
+function playDartAgain(){
+
+startDartGame();
+
+}
+
+
+/* =========================
+STOP DART
+========================= */
+
+function stopDart(){
+
+clearInterval(dartPowerTimer);
+
+cancelAnimationFrame(dartAnimation);
+
+dartBusy=true;
+
+const ball=
+document.getElementById("dartBall");
+
+if(ball){
+
+ball.classList.remove("flying");
 
 }
 
@@ -1762,10 +3144,18 @@ document
 
 
 /* =========================
-   PLAY AGAIN
+PLAY AGAIN NORMAL
 ========================= */
 
 function playAgain(){
+
+if(selectedGame==="dart"){
+
+startDartGame();
+
+return;
+
+}
 
 startGame();
 
@@ -1773,12 +3163,14 @@ startGame();
 
 
 /* =========================
-   STUDY
+STUDY
 ========================= */
 
 function openStudy(){
 
 clearInterval(timerInterval);
+
+stopDart();
 
 hideAll();
 
@@ -1797,7 +3189,6 @@ const container=
 document.getElementById("tableButtons");
 
 container.innerHTML="";
-
 
 for(let i=0;i<=10;i++){
 
@@ -1831,7 +3222,6 @@ document.getElementById("tableDisplay");
 display.innerHTML=
 `<h2>📖 Table of ${number}</h2>`;
 
-
 for(let i=0;i<=10;i++){
 
 display.innerHTML+=`
@@ -1856,12 +3246,14 @@ ${number*i}
 
 
 /* =========================
-   PROGRESS
+PROGRESS
 ========================= */
 
 function openProgress(){
 
 clearInterval(timerInterval);
+
+stopDart();
 
 hideAll();
 
@@ -1886,13 +3278,11 @@ return b[1]-a[1];
 
 });
 
-
 const champion=
 document.getElementById("champion");
 
 const leaderboard=
 document.getElementById("leaderboard");
-
 
 if(entries.length===0){
 
@@ -1914,9 +3304,7 @@ return;
 
 }
 
-
 const best=entries[0];
-
 
 champion.innerHTML=`
 
@@ -1936,9 +3324,7 @@ ${escapeHTML(best[0])}
 
 `;
 
-
 leaderboard.innerHTML="";
-
 
 entries.forEach(function(player,index){
 
@@ -1946,20 +3332,17 @@ const name=player[0];
 
 const points=player[1];
 
-
 const medal=
 index===0?"🥇":
 index===1?"🥈":
 index===2?"🥉":
 "🏅";
 
-
 const card=
 document.createElement("div");
 
 card.className=
 "player-card";
-
 
 const left=
 document.createElement("div");
@@ -1989,7 +3372,6 @@ Best Score
 
 `;
 
-
 const right=
 document.createElement("div");
 
@@ -2001,7 +3383,6 @@ right.innerHTML=`
 
 `;
 
-
 const deleteButton=
 document.createElement("button");
 
@@ -2011,13 +3392,11 @@ deleteButton.className=
 deleteButton.textContent=
 "🗑️";
 
-
 deleteButton.onclick=function(){
 
 deletePlayer(name);
 
 };
-
 
 right.appendChild(deleteButton);
 
@@ -2033,7 +3412,7 @@ leaderboard.appendChild(card);
 
 
 /* =========================
-   DELETE PLAYER
+DELETE PLAYER
 ========================= */
 
 function deletePlayer(name){
@@ -2045,7 +3424,6 @@ if(!confirm(
 return;
 
 }
-
 
 const players=getPlayers();
 
@@ -2059,20 +3437,23 @@ displayLeaderboard();
 
 
 /* =========================
-   HIDE ALL
+HIDE ALL
 ========================= */
 
 function hideAll(){
 
 const pages=[
+
 "home",
 "playerScreen",
 "game",
+"dartGame",
+"dartResult",
 "study",
 "progressPage",
 "result"
-];
 
+];
 
 pages.forEach(function(id){
 
@@ -2091,12 +3472,14 @@ element.classList.add("hidden");
 
 
 /* =========================
-   HOME
+HOME
 ========================= */
 
 function goHome(){
 
 clearInterval(timerInterval);
+
+stopDart();
 
 answering=false;
 
@@ -2110,7 +3493,7 @@ document
 
 
 /* =========================
-   ESCAPE HTML
+ESCAPE
 ========================= */
 
 function escapeHTML(text){
@@ -2127,7 +3510,7 @@ return String(text)
 
 
 /* =========================
-   SOUND
+SOUND
 ========================= */
 
 function playSound(correct){
@@ -2149,13 +3532,11 @@ audio.createOscillator();
 const gain=
 audio.createGain();
 
-
 oscillator.connect(gain);
 
 gain.connect(
 audio.destination
 );
-
 
 oscillator.frequency.value=
 correct?700:180;
@@ -2167,7 +3548,6 @@ oscillator.start();
 oscillator.stop(
 audio.currentTime+.15
 );
-
 
 }catch(error){
 
@@ -2181,7 +3561,7 @@ console.log(
 
 
 /* =========================
-   START
+START
 ========================= */
 
 goHome();
@@ -2190,4 +3570,3 @@ goHome();
 
 </body>
 </html>
-```
