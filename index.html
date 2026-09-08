@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Math Quest 🎮</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚀 Math Quest</title>
 
 <style>
 *{box-sizing:border-box}
@@ -91,6 +91,14 @@ border-radius:12px;
 cursor:pointer;
 font-weight:bold;
 font-size:16px;
+}
+
+.player-screen{
+text-align:center;
+}
+
+.player-screen h2{
+font-size:32px;
 }
 
 .player-name{
@@ -180,14 +188,6 @@ padding:10px 18px;
 border-radius:10px;
 margin-top:10px;
 cursor:pointer;
-}
-
-.player-screen{
-text-align:center;
-}
-
-.player-screen h2{
-font-size:32px;
 }
 
 .game-title{
@@ -290,15 +290,8 @@ min-height:38px;
 margin:15px;
 }
 
-.big-question{
-font-size:58px;
-text-align:center;
-font-weight:bold;
-margin:30px 0;
-}
-
 .streak-fire{
-font-size:35px;
+font-size:30px;
 text-align:center;
 margin:10px;
 }
@@ -386,14 +379,6 @@ margin:10px;
 font-weight:bold;
 }
 
-@keyframes pop{
-50%{transform:scale(1.15)}
-}
-
-.pop{
-animation:pop .3s;
-}
-
 @media(max-width:650px){
 
 header h1{font-size:34px}
@@ -410,13 +395,14 @@ grid-template-columns:1fr;
 grid-template-columns:1fr;
 }
 
-.question,.big-question{
+.question{
 font-size:42px;
 }
 
 .table-buttons{
 grid-template-columns:repeat(3,1fr);
 }
+
 }
 </style>
 </head>
@@ -430,6 +416,7 @@ grid-template-columns:repeat(3,1fr);
 
 <div class="container">
 
+
 <!-- HOME -->
 
 <div id="home" class="card">
@@ -440,79 +427,110 @@ grid-template-columns:repeat(3,1fr);
 
 <div class="menu">
 
-<button class="big-button game1" onclick="choosePlayer('quick')">
+<button class="big-button game1"
+onclick="choosePlayer('quick')">
 🎯 Quick Game
-<br><small>20 questions</small>
+<br>
+<small>20 questions</small>
 </button>
 
-<button class="big-button game2" onclick="choosePlayer('time')">
+<button class="big-button game2"
+onclick="choosePlayer('time')">
 ⚡ Time Challenge
-<br><small>60 seconds</small>
+<br>
+<small>60 seconds</small>
 </button>
 
-<button class="big-button game3" onclick="choosePlayer('missing')">
+<button class="big-button game3"
+onclick="choosePlayer('missing')">
 🧠 Missing Number
-<br><small>Find the mystery number</small>
+<br>
+<small>Find the mystery number</small>
 </button>
 
-<button class="big-button game4" onclick="choosePlayer('streak')">
+<button class="big-button game4"
+onclick="choosePlayer('streak')">
 🔥 Streak Master
-<br><small>Build your streak</small>
+<br>
+<small>Build your streak</small>
 </button>
 
-<button class="big-button game5" onclick="choosePlayer('battle')">
+<button class="big-button game5"
+onclick="choosePlayer('battle')">
 🎲 Number Battle
-<br><small>Choose the winner</small>
+<br>
+<small>Choose the winner</small>
 </button>
 
-<button class="big-button game6" onclick="choosePlayer('speed')">
+<button class="big-button game6"
+onclick="choosePlayer('speed')">
 🚀 Speed Round
-<br><small>Super fast questions</small>
+<br>
+<small>Super fast questions</small>
 </button>
 
-<button class="big-button study" onclick="openStudy()">
+<button class="big-button study"
+onclick="openStudy()">
 📚 Study Tables
-<br><small>Tables 0–10</small>
+<br>
+<small>Tables 0–10</small>
 </button>
 
-<button class="big-button progress" onclick="openProgress()">
+<button class="big-button progress"
+onclick="openProgress()">
 🏆 My Progress
-<br><small>Best scores</small>
+<br>
+<small>Best scores</small>
 </button>
 
 </div>
 </div>
 
 
-<!-- PLAYER -->
+<!-- PLAYER SCREEN -->
 
-<div id="playerScreen" class="card hidden player-screen">
+<div id="playerScreen"
+class="card hidden player-screen">
 
-<button class="back" onclick="goHome()">⬅ Back</button>
+<button class="back"
+onclick="goHome()">
+⬅ Back
+</button>
 
 <h2>👋 Who is playing?</h2>
 
-<p id="playerGameText">Choose your name to start!</p>
+<p id="playerGameText">
+Choose your name to start!
+</p>
 
-<div id="playerList" class="player-list"></div>
+<div id="playerList"
+class="player-list">
+</div>
 
-<button class="new-player" onclick="showNewPlayer()">
+<button class="new-player"
+onclick="showNewPlayer()">
 ➕ New Player
 </button>
 
-<div id="nameBox" class="name-box hidden">
+<div id="nameBox"
+class="name-box hidden">
 
-<input id="nameInput"
+<input
+id="nameInput"
 class="name-input"
 maxlength="20"
 placeholder="Enter your name..."
 autocomplete="off">
 
-<button class="save-name" onclick="createPlayer()">
+<button
+class="save-name"
+onclick="createPlayer()">
 💾 Save & Play
 </button>
 
-<button class="cancel-name" onclick="hideNewPlayer()">
+<button
+class="cancel-name"
+onclick="hideNewPlayer()">
 Cancel
 </button>
 
@@ -525,10 +543,18 @@ Cancel
 
 <div id="game" class="card hidden">
 
-<button class="back" onclick="goHome()">⬅ Back</button>
+<button class="back"
+onclick="goHome()">
+⬅ Back
+</button>
 
-<h2 id="gameTitle" class="game-title"></h2>
-<p id="gameDescription" class="game-description"></p>
+<h2 id="gameTitle"
+class="game-title">
+</h2>
+
+<p id="gameDescription"
+class="game-description">
+</p>
 
 <div class="player-name">
 👤 <span id="currentPlayer"></span>
@@ -559,75 +585,105 @@ Cancel
 </div>
 
 <div class="progress-track">
-<div id="progressBar" class="progress-bar"></div>
+<div id="progressBar"
+class="progress-bar">
+</div>
 </div>
 
-<div id="streakFire" class="streak-fire"></div>
+<div id="streakFire"
+class="streak-fire">
+</div>
 
-<div id="question" class="question">
+<div id="question"
+class="question">
 3 × 4 = ?
 </div>
 
-<div id="answers" class="answer-grid"></div>
+<div id="answers"
+class="answer-grid">
+</div>
 
-<div id="message" class="message"></div>
+<div id="message"
+class="message">
+</div>
 
 </div>
 
 
 <!-- STUDY -->
 
-<div id="study" class="card hidden">
+<div id="study"
+class="card hidden">
 
-<button class="back" onclick="goHome()">⬅ Back</button>
+<button class="back"
+onclick="goHome()">
+⬅ Back
+</button>
 
 <h2>📚 Multiplication Tables</h2>
 
 <p>Choose a table:</p>
 
-<div id="tableButtons" class="table-buttons"></div>
+<div id="tableButtons"
+class="table-buttons">
+</div>
 
-<div id="tableDisplay"></div>
+<div id="tableDisplay">
+</div>
 
 </div>
 
 
 <!-- PROGRESS -->
 
-<div id="progressPage" class="card hidden">
+<div id="progressPage"
+class="card hidden">
 
-<button class="back" onclick="goHome()">⬅ Back</button>
+<button class="back"
+onclick="goHome()">
+⬅ Back
+</button>
 
 <h2>🏆 My Progress</h2>
 
-<div id="champion"></div>
+<div id="champion"
+class="champion">
+</div>
 
-<div id="leaderboard"></div>
+<div id="leaderboard">
+</div>
 
 </div>
 
 
 <!-- RESULT -->
 
-<div id="result" class="card hidden">
+<div id="result"
+class="card hidden">
 
 <div class="result">
 
 <h1>🎉 Game Complete!</h1>
 
-<div id="resultText"></div>
+<div id="resultText">
+</div>
 
-<div id="badge"></div>
+<div id="badge">
+</div>
 
 <br>
 
-<button class="big-button game1" onclick="playAgain()">
+<button
+class="big-button game1"
+onclick="playAgain()">
 🎮 Play Again
 </button>
 
 <br><br>
 
-<button class="back" onclick="goHome()">
+<button
+class="back"
+onclick="goHome()">
 🏠 Home
 </button>
 
@@ -640,49 +696,32 @@ Cancel
 
 <script>
 
-let currentPlayer="";
-let selectedGame="";
-
-let score=0;
-let streak=0;
-let lives=3;
-let questionNumber=0;
-
-let correctAnswer=0;
-
-let timeLeft=60;
-let timerInterval=null;
-
-let waiting=false;
-
-
 /* =========================
-   STORAGE
+   VARIABLES
 ========================= */
 
-function getPlayers(){
+let currentPlayer = "";
+let selectedGame = "";
 
-return JSON.parse(
-localStorage.getItem("mathPlayers") || "{}"
-);
+let score = 0;
+let streak = 0;
+let lives = 3;
 
-}
+let questionNumber = 0;
+let correctAnswer = 0;
 
-function savePlayers(players){
+let timeLeft = 60;
 
-localStorage.setItem(
-"mathPlayers",
-JSON.stringify(players)
-);
+let timerInterval = null;
 
-}
+let answering = false;
 
 
 /* =========================
    GAME INFO
 ========================= */
 
-const gameInfo={
+const gameInfo = {
 
 quick:{
 title:"🎯 Quick Game",
@@ -692,7 +731,7 @@ questions:20
 
 time:{
 title:"⚡ Time Challenge",
-description:"Answer as many as you can in 60 seconds!",
+description:"Answer as many as possible in 60 seconds!",
 questions:999
 },
 
@@ -704,24 +743,54 @@ questions:20
 
 streak:{
 title:"🔥 Streak Master",
-description:"Keep answering correctly to build your streak!",
+description:"Build the biggest streak!",
 questions:30
 },
 
 battle:{
 title:"🎲 Number Battle",
-description:"Choose the correct answer from the battle!",
+description:"Choose the correct answer!",
 questions:20
 },
 
 speed:{
 title:"🚀 Speed Round",
-description:"Answer before time runs out!",
+description:"You only have 5 seconds!",
 questions:15
-
 }
 
 };
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function getPlayers(){
+
+try{
+
+return JSON.parse(
+localStorage.getItem("mathPlayers")
+)||{};
+
+}catch(error){
+
+return {};
+
+}
+
+}
+
+
+function savePlayers(players){
+
+localStorage.setItem(
+"mathPlayers",
+JSON.stringify(players)
+);
+
+}
 
 
 /* =========================
@@ -762,52 +831,65 @@ document.getElementById("playerList");
 
 const players=getPlayers();
 
-const names=Object.keys(players);
+const names=
+Object.keys(players);
 
 list.innerHTML="";
 
 if(names.length===0){
 
 list.innerHTML=`
-<div style="grid-column:1/-1;padding:20px">
-👋 No players yet!<br>
-Click <b>➕ New Player</b> to create one.
+
+<div style="
+grid-column:1/-1;
+padding:20px">
+
+👋 No players yet!<br><br>
+
+Click
+<b>➕ New Player</b>
+to create one.
+
 </div>
+
 `;
 
 return;
+
 }
 
-names.forEach(name=>{
+
+names.forEach(function(name){
 
 const button=
 document.createElement("button");
 
-button.className="player-choice";
+button.className=
+"player-choice";
 
 button.innerHTML=`
+
 👤 ${escapeHTML(name)}
+
 <small>
-🏆 Best: ${players[name]} points
+🏆 Best:
+${players[name]}
+points
 </small>
+
 `;
 
-button.onclick=()=>{
-selectPlayer(name);
+button.onclick=function(){
+
+currentPlayer=name;
+
+startGame();
+
 };
 
 list.appendChild(button);
 
 });
-
-}
-
-
-function selectPlayer(name){
-
-currentPlayer=name;
-
-startGame();
 
 }
 
@@ -822,13 +904,12 @@ document
 .getElementById("nameBox")
 .classList.remove("hidden");
 
-document
-.getElementById("nameInput")
-.value="";
+const input=
+document.getElementById("nameInput");
 
-document
-.getElementById("nameInput")
-.focus();
+input.value="";
+
+input.focus();
 
 }
 
@@ -844,26 +925,35 @@ document
 
 function createPlayer(){
 
+const input=
+document.getElementById("nameInput");
+
 let name=
-document
-.getElementById("nameInput")
-.value.trim();
+input.value.trim();
 
 if(!name){
 
-alert("✏️ Please enter a name!");
+alert("✏️ Please enter your name!");
 
 return;
+
 }
 
-let players=getPlayers();
 
-/* Case-insensitive duplicate check */
+const players=getPlayers();
+
+
+/* Existing name */
 
 const existing=
 Object.keys(players).find(
-n=>n.toLowerCase()===name.toLowerCase()
-);
+function(player){
+
+return player.toLowerCase()===
+name.toLowerCase();
+
+});
+
 
 if(existing){
 
@@ -872,9 +962,11 @@ currentPlayer=existing;
 startGame();
 
 return;
+
 }
 
-/* SAVE IMMEDIATELY */
+
+/* SAVE NAME */
 
 players[name]=0;
 
@@ -887,14 +979,18 @@ startGame();
 }
 
 
+/* ENTER KEY */
+
 document
 .getElementById("nameInput")
 .addEventListener(
 "keydown",
-function(e){
+function(event){
 
-if(e.key==="Enter"){
+if(event.key==="Enter"){
+
 createPlayer();
+
 }
 
 });
@@ -911,9 +1007,13 @@ clearInterval(timerInterval);
 score=0;
 streak=0;
 lives=3;
+
 questionNumber=0;
+correctAnswer=0;
+
+answering=false;
+
 timeLeft=60;
-waiting=false;
 
 hideAll();
 
@@ -933,19 +1033,39 @@ gameInfo[selectedGame].description;
 
 document
 .getElementById("currentPlayer")
-.textContent=currentPlayer;
+.textContent=
+currentPlayer;
+
+document
+.getElementById("message")
+.textContent="";
+
+document
+.getElementById("streakFire")
+.textContent="";
 
 updateStats();
 
+
+/* TIME */
+
 if(selectedGame==="time"){
 
-timerInterval=setInterval(()=>{
+document
+.getElementById("timer")
+.textContent=60;
+
+timerInterval=
+setInterval(function(){
+
+if(answering)return;
 
 timeLeft--;
 
 document
 .getElementById("timer")
-.textContent=timeLeft;
+.textContent=
+timeLeft;
 
 if(timeLeft<=0){
 
@@ -957,15 +1077,15 @@ endGame();
 
 }
 
+
+/* SPEED */
+
 if(selectedGame==="speed"){
 
-timeLeft=5;
-
-document
-.getElementById("timer")
-.textContent="5";
+startSpeedTimer();
 
 }
+
 
 nextQuestion();
 
@@ -978,51 +1098,84 @@ nextQuestion();
 
 function nextQuestion(){
 
-if(waiting)return;
+if(answering)return;
 
-if(selectedGame==="quick" &&
-questionNumber>=20){
+
+/* limits */
+
+if(
+selectedGame==="quick" &&
+questionNumber>=20
+){
 
 endGame();
+
 return;
 
 }
 
-if(selectedGame==="missing" &&
-questionNumber>=20){
+
+if(
+selectedGame==="missing" &&
+questionNumber>=20
+){
 
 endGame();
+
 return;
 
 }
 
-if(selectedGame==="streak" &&
-(questionNumber>=30 || lives<=0)){
+
+if(
+selectedGame==="streak" &&
+questionNumber>=30
+){
 
 endGame();
+
 return;
 
 }
 
-if(selectedGame==="battle" &&
-questionNumber>=20){
+
+if(
+selectedGame==="battle" &&
+questionNumber>=20
+){
 
 endGame();
+
 return;
 
 }
 
-if(selectedGame==="speed" &&
-questionNumber>=15){
+
+if(
+selectedGame==="speed" &&
+questionNumber>=15
+){
 
 endGame();
+
 return;
 
 }
+
+
+if(lives<=0){
+
+endGame();
+
+return;
+
+}
+
 
 questionNumber++;
 
-waiting=false;
+answering=false;
+
 
 if(selectedGame==="missing"){
 
@@ -1033,6 +1186,7 @@ makeMissingQuestion();
 makeNormalQuestion();
 
 }
+
 
 updateProgress();
 
@@ -1051,15 +1205,15 @@ if(selectedGame==="battle"){
 max=12;
 }
 
-if(selectedGame==="speed"){
-max=10;
-}
-
 const a=
-Math.floor(Math.random()*(max+1));
+Math.floor(
+Math.random()*(max+1)
+);
 
 const b=
-Math.floor(Math.random()*(max+1));
+Math.floor(
+Math.random()*(max+1)
+);
 
 correctAnswer=a*b;
 
@@ -1085,17 +1239,10 @@ Math.floor(Math.random()*11);
 const b=
 Math.floor(Math.random()*11);
 
-correctAnswer=Math.random()<.5?a:b;
 
-if(correctAnswer===0 &&
-Math.random()<.5){
+if(Math.random()<0.5){
 
-correctAnswer=
-Math.floor(Math.random()*10)+1;
-
-}
-
-if(Math.random()<.5){
+correctAnswer=a;
 
 document
 .getElementById("question")
@@ -1104,12 +1251,15 @@ document
 
 }else{
 
+correctAnswer=b;
+
 document
 .getElementById("question")
 .textContent=
 `${a} × ? = ${a*b}`;
 
 }
+
 
 createAnswers();
 
@@ -1127,29 +1277,38 @@ document.getElementById("answers");
 
 container.innerHTML="";
 
-let choices=[correctAnswer];
+const choices=[
+correctAnswer
+];
 
-
-/* Battle gets more interesting */
 
 while(choices.length<4){
 
-let difference=
-Math.floor(Math.random()*7)+1;
+const difference=
+Math.floor(
+Math.random()*8
+)+1;
 
 let random;
 
-if(Math.random()<.5){
+
+if(Math.random()<0.5){
 
 random=
-correctAnswer+difference;
+correctAnswer+
+difference;
 
 }else{
 
 random=
-Math.max(0,correctAnswer-difference);
+Math.max(
+0,
+correctAnswer-
+difference
+);
 
 }
+
 
 if(!choices.includes(random)){
 
@@ -1159,19 +1318,29 @@ choices.push(random);
 
 }
 
-choices.sort(()=>Math.random()-.5);
 
-choices.forEach(answer=>{
+choices.sort(
+()=>Math.random()-.5
+);
+
+
+choices.forEach(function(answer){
 
 const button=
 document.createElement("button");
 
 button.className="answer";
 
-button.textContent=answer;
+button.textContent=
+answer;
 
-button.onclick=()=>{
-checkAnswer(answer,button);
+button.onclick=function(){
+
+checkAnswer(
+answer,
+button
+);
+
 };
 
 container.appendChild(button);
@@ -1182,21 +1351,24 @@ container.appendChild(button);
 
 
 /* =========================
-   CHECK
+   CHECK ANSWER
 ========================= */
 
 function checkAnswer(answer,button){
 
-if(waiting)return;
+if(answering)return;
 
-waiting=true;
+answering=true;
 
-const buttons=
-document.querySelectorAll(".answer");
 
-buttons.forEach(b=>{
-b.disabled=true;
+document
+.querySelectorAll(".answer")
+.forEach(function(btn){
+
+btn.disabled=true;
+
 });
+
 
 if(answer===correctAnswer){
 
@@ -1204,21 +1376,20 @@ button.classList.add("correct");
 
 streak++;
 
+
 let points=10;
 
-
-/* Different games */
 
 if(selectedGame==="quick"){
 points=10+streak;
 }
 
 if(selectedGame==="missing"){
-points=15+streak*2;
+points=15+(streak*2);
 }
 
 if(selectedGame==="streak"){
-points=10+streak*3;
+points=10+(streak*3);
 }
 
 if(selectedGame==="battle"){
@@ -1233,12 +1404,14 @@ if(selectedGame==="time"){
 points=10+streak;
 }
 
+
 score+=points;
+
 
 document
 .getElementById("message")
 .textContent=
-"🎉 CORRECT! +"+points;
+`🎉 CORRECT! +${points}`;
 
 playSound(true);
 
@@ -1248,71 +1421,42 @@ button.classList.add("wrong");
 
 streak=0;
 
+
 if(
 selectedGame==="quick" ||
 selectedGame==="missing" ||
-selectedGame==="battle"
+selectedGame==="battle" ||
+selectedGame==="streak"
 ){
 
 lives--;
 
 }
 
+
 document
 .getElementById("message")
 .textContent=
-"💡 Try the next one!";
+"💡 Not quite!";
 
 playSound(false);
 
 }
 
 
-/* Streak Master */
-
-if(selectedGame==="streak"){
-
-if(answer!==correctAnswer){
-
-lives--;
-
-}
-
-}
-
-
-/* Speed Round */
-
-if(selectedGame==="speed"){
-
-timeLeft=5;
-
-document
-.getElementById("timer")
-.textContent="5";
-
-}
-
-
-/* Time Challenge */
-
-if(selectedGame==="time"){
-
-document
-.getElementById("timer")
-.textContent=timeLeft;
-
-}
-
 updateStats();
 
 showStreak();
 
-setTimeout(()=>{
+
+/* WAIT THEN NEXT QUESTION */
+
+setTimeout(function(){
 
 document
 .getElementById("message")
 .textContent="";
+
 
 if(lives<=0){
 
@@ -1322,15 +1466,102 @@ return;
 
 }
 
+
+answering=false;
+
+
+/* SPEED TIMER RESET */
+
+if(selectedGame==="speed"){
+
+startSpeedTimer();
+
+}
+
+
 nextQuestion();
 
-},650);
+
+},700);
 
 }
 
 
 /* =========================
-   STREAK
+   SPEED TIMER
+========================= */
+
+function startSpeedTimer(){
+
+clearInterval(timerInterval);
+
+timeLeft=5;
+
+document
+.getElementById("timer")
+.textContent=5;
+
+
+timerInterval=
+setInterval(function(){
+
+if(answering)return;
+
+timeLeft--;
+
+document
+.getElementById("timer")
+.textContent=
+timeLeft;
+
+
+if(timeLeft<=0){
+
+clearInterval(timerInterval);
+
+answering=true;
+
+lives--;
+
+streak=0;
+
+document
+.getElementById("message")
+.textContent=
+"⏰ TOO SLOW!";
+
+updateStats();
+
+playSound(false);
+
+
+setTimeout(function(){
+
+if(lives<=0){
+
+endGame();
+
+}else{
+
+answering=false;
+
+startSpeedTimer();
+
+nextQuestion();
+
+}
+
+},700);
+
+}
+
+},1000);
+
+}
+
+
+/* =========================
+   STREAK DISPLAY
 ========================= */
 
 function showStreak(){
@@ -1338,15 +1569,16 @@ function showStreak(){
 const fire=
 document.getElementById("streakFire");
 
+
 if(streak>=10){
 
 fire.textContent=
-"🔥🔥🔥 AMAZING "+streak+" STREAK! 🔥🔥🔥";
+`🔥🔥🔥 AMAZING ${streak} STREAK! 🔥🔥🔥`;
 
 }else if(streak>=5){
 
 fire.textContent=
-"🔥 "+streak+" STREAK!";
+`🔥 ${streak} STREAK!`;
 
 }else{
 
@@ -1365,11 +1597,13 @@ function updateStats(){
 
 document
 .getElementById("score")
-.textContent=score;
+.textContent=
+score;
 
 document
 .getElementById("streak")
-.textContent=streak;
+.textContent=
+streak;
 
 document
 .getElementById("lives")
@@ -1378,12 +1612,16 @@ lives>0
 ?"❤️".repeat(lives)
 :"💔";
 
-if(selectedGame!=="time" &&
-selectedGame!=="speed"){
+
+if(
+selectedGame!=="time" &&
+selectedGame!=="speed"
+){
 
 document
 .getElementById("timer")
-.textContent="∞";
+.textContent=
+"∞";
 
 }
 
@@ -1396,9 +1634,6 @@ document
 
 function updateProgress(){
 
-let total=
-gameInfo[selectedGame].questions;
-
 if(selectedGame==="time"){
 
 document
@@ -1409,13 +1644,20 @@ return;
 
 }
 
-let percent=
+
+const total=
+gameInfo[selectedGame].questions;
+
+const percent=
 ((questionNumber-1)/total)*100;
 
 document
 .getElementById("progressBar")
 .style.width=
-Math.min(percent,100)+"%";
+Math.min(
+percent,
+100
+)+"%";
 
 }
 
@@ -1426,17 +1668,9 @@ Math.min(percent,100)+"%";
 
 function endGame(){
 
-if(waiting===false){
-
 clearInterval(timerInterval);
 
-}else{
-
-clearInterval(timerInterval);
-
-}
-
-waiting=true;
+answering=true;
 
 const players=getPlayers();
 
@@ -1446,6 +1680,7 @@ players[currentPlayer]||0;
 const newRecord=
 score>oldBest;
 
+
 if(newRecord){
 
 players[currentPlayer]=score;
@@ -1454,39 +1689,59 @@ savePlayers(players);
 
 }
 
+
 hideAll();
 
 document
 .getElementById("result")
 .classList.remove("hidden");
 
+
 document
 .getElementById("resultText")
 .innerHTML=`
 
-<p>👤 <b>${escapeHTML(currentPlayer)}</b></p>
+<p>
+👤
+<b>${escapeHTML(currentPlayer)}</b>
+</p>
 
-<p>🎮 ${gameInfo[selectedGame].title}</p>
+<p>
+🎮
+${gameInfo[selectedGame].title}
+</p>
 
-<p>⭐ Score:
-<b>${score}</b></p>
+<p>
+⭐ Score:
+<b>${score}</b>
+</p>
 
-<p>🏆 Personal Best:
-<b>${Math.max(score,oldBest)}</b></p>
+<p>
+🏆 Personal Best:
+<b>${Math.max(
+score,
+oldBest
+)}</b>
+</p>
 
-<p>🔥 Best Streak:
-<b>${streak}</b></p>
+<p>
+🔥 Final Streak:
+<b>${streak}</b>
+</p>
 
 `;
+
 
 if(newRecord){
 
 document
 .getElementById("badge")
 .innerHTML=`
+
 <span class="badge">
 👑 NEW RECORD!
 </span>
+
 `;
 
 }else{
@@ -1494,9 +1749,11 @@ document
 document
 .getElementById("badge")
 .innerHTML=`
+
 <span class="badge">
 💪 KEEP PRACTICING!
 </span>
+
 `;
 
 }
@@ -1541,17 +1798,22 @@ document.getElementById("tableButtons");
 
 container.innerHTML="";
 
+
 for(let i=0;i<=10;i++){
 
 const button=
 document.createElement("button");
 
-button.className="table-button";
+button.className=
+"table-button";
 
-button.textContent="× "+i;
+button.textContent=
+"× "+i;
 
-button.onclick=()=>{
+button.onclick=function(){
+
 showTable(i);
+
 };
 
 container.appendChild(button);
@@ -1569,15 +1831,20 @@ document.getElementById("tableDisplay");
 display.innerHTML=
 `<h2>📖 Table of ${number}</h2>`;
 
+
 for(let i=0;i<=10;i++){
 
 display.innerHTML+=`
 
 <div class="table-row">
 
-<span>${number} × ${i}</span>
+<span>
+${number} × ${i}
+</span>
 
-<strong>${number*i}</strong>
+<strong>
+${number*i}
+</strong>
 
 </div>
 
@@ -1613,7 +1880,12 @@ const players=getPlayers();
 
 const entries=
 Object.entries(players)
-.sort((a,b)=>b[1]-a[1]);
+.sort(function(a,b){
+
+return b[1]-a[1];
+
+});
+
 
 const champion=
 document.getElementById("champion");
@@ -1621,41 +1893,59 @@ document.getElementById("champion");
 const leaderboard=
 document.getElementById("leaderboard");
 
+
 if(entries.length===0){
 
 champion.innerHTML="";
 
 leaderboard.innerHTML=`
-<div style="text-align:center;padding:30px">
+
+<div style="
+text-align:center;
+padding:30px">
+
 🧑‍🎓 No players yet!
+
 </div>
+
 `;
 
 return;
 
 }
 
+
 const best=entries[0];
+
 
 champion.innerHTML=`
 
 👑 <b>Math Champion</b> 👑
 
-<div style="font-size:30px;margin-top:8px">
+<div style="
+font-size:30px;
+margin-top:8px">
+
 ${escapeHTML(best[0])}
+
 </div>
 
-<div>⭐ ${best[1]} points</div>
+<div>
+⭐ ${best[1]} points
+</div>
 
 `;
 
+
 leaderboard.innerHTML="";
 
-entries.forEach((player,index)=>{
+
+entries.forEach(function(player,index){
 
 const name=player[0];
 
 const points=player[1];
+
 
 const medal=
 index===0?"🥇":
@@ -1663,31 +1953,42 @@ index===1?"🥈":
 index===2?"🥉":
 "🏅";
 
+
 const card=
 document.createElement("div");
 
-card.className="player-card";
+card.className=
+"player-card";
+
 
 const left=
 document.createElement("div");
 
-left.className="player-left";
+left.className=
+"player-left";
 
 left.innerHTML=`
 
-<span class="rank">${medal}</span>
+<span class="rank">
+${medal}
+</span>
 
 <div>
 
-<b>${escapeHTML(name)}</b>
+<b>
+${escapeHTML(name)}
+</b>
 
 <br>
 
-<small>Best Score</small>
+<small>
+Best Score
+</small>
 
 </div>
 
 `;
+
 
 const right=
 document.createElement("div");
@@ -1700,20 +2001,28 @@ right.innerHTML=`
 
 `;
 
+
 const deleteButton=
 document.createElement("button");
 
-deleteButton.className="delete-player";
+deleteButton.className=
+"delete-player";
 
-deleteButton.textContent="🗑️";
+deleteButton.textContent=
+"🗑️";
 
-deleteButton.onclick=()=>{
+
+deleteButton.onclick=function(){
+
 deletePlayer(name);
+
 };
+
 
 right.appendChild(deleteButton);
 
 card.appendChild(left);
+
 card.appendChild(right);
 
 leaderboard.appendChild(card);
@@ -1729,9 +2038,14 @@ leaderboard.appendChild(card);
 
 function deletePlayer(name){
 
-if(confirm(
+if(!confirm(
 `Delete ${name}'s saved player?`
 )){
+
+return;
+
+}
+
 
 const players=getPlayers();
 
@@ -1743,8 +2057,6 @@ displayLeaderboard();
 
 }
 
-}
-
 
 /* =========================
    HIDE ALL
@@ -1752,18 +2064,26 @@ displayLeaderboard();
 
 function hideAll(){
 
-[
+const pages=[
 "home",
 "playerScreen",
 "game",
 "study",
 "progressPage",
 "result"
-].forEach(id=>{
+];
 
-document
-.getElementById(id)
-.classList.add("hidden");
+
+pages.forEach(function(id){
+
+const element=
+document.getElementById(id);
+
+if(element){
+
+element.classList.add("hidden");
+
+}
 
 });
 
@@ -1778,7 +2098,7 @@ function goHome(){
 
 clearInterval(timerInterval);
 
-waiting=false;
+answering=false;
 
 hideAll();
 
@@ -1790,12 +2110,13 @@ document
 
 
 /* =========================
-   ESCAPE
+   ESCAPE HTML
 ========================= */
 
 function escapeHTML(text){
 
-return text
+return String(text)
+
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
@@ -1813,6 +2134,12 @@ function playSound(correct){
 
 try{
 
+const AudioContext=
+window.AudioContext||
+window.webkitAudioContext;
+
+if(!AudioContext)return;
+
 const audio=
 new AudioContext();
 
@@ -1822,9 +2149,13 @@ audio.createOscillator();
 const gain=
 audio.createGain();
 
+
 oscillator.connect(gain);
 
-gain.connect(audio.destination);
+gain.connect(
+audio.destination
+);
+
 
 oscillator.frequency.value=
 correct?700:180;
@@ -1837,12 +2168,21 @@ oscillator.stop(
 audio.currentTime+.15
 );
 
-}catch(e){}
+
+}catch(error){
+
+console.log(
+"Sound unavailable"
+);
+
+}
 
 }
 
 
-/* START */
+/* =========================
+   START
+========================= */
 
 goHome();
 
