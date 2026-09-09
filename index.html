@@ -5,30 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🚀 Math Quest</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+
 <style>
 *{box-sizing:border-box}
 
 body{
 margin:0;
-font-family:"Trebuchet MS",Arial,sans-serif;
-background:linear-gradient(135deg,#6c63ff,#4ecdc4);
+font-family:"Baloo 2","Trebuchet MS",Arial,sans-serif;
+background:
+radial-gradient(circle at 12% 18%,rgba(255,255,255,.35) 0 3px,transparent 4px),
+radial-gradient(circle at 82% 12%,rgba(255,255,255,.3) 0 4px,transparent 5px),
+radial-gradient(circle at 30% 78%,rgba(255,255,255,.3) 0 3px,transparent 4px),
+radial-gradient(circle at 68% 88%,rgba(255,255,255,.3) 0 4px,transparent 5px),
+radial-gradient(circle at 92% 60%,rgba(255,255,255,.28) 0 3px,transparent 4px),
+radial-gradient(circle at 6% 55%,rgba(255,255,255,.28) 0 3px,transparent 4px),
+linear-gradient(135deg,#7c6bff,#4ecdc4,#ffd166);
+background-attachment:fixed;
 min-height:100vh;
 color:#202040;
 }
 
 header{
 text-align:center;
-padding:25px 15px 10px;
+padding:30px 15px 10px;
 color:white;
 }
 
 header h1{
-font-size:44px;
+font-size:50px;
 margin:0;
+font-weight:800;
+letter-spacing:.5px;
 text-shadow:3px 4px 0 #4038a5;
+display:inline-block;
+animation:headerWiggle 3.2s ease-in-out infinite;
 }
 
-header p{font-size:19px}
+@keyframes headerWiggle{
+0%,100%{transform:rotate(-2deg) translateY(0)}
+50%{transform:rotate(2deg) translateY(-4px)}
+}
+
+header p{
+font-size:20px;
+font-weight:700;
+margin-top:4px;
+}
 
 .container{
 max-width:1050px;
@@ -38,10 +62,19 @@ padding:15px;
 
 .card{
 background:rgba(255,255,255,.97);
-border-radius:25px;
+border-radius:32px;
 padding:25px;
 margin-bottom:20px;
 box-shadow:0 12px 30px rgba(0,0,0,.2);
+border:4px solid #fff;
+outline:4px dashed rgba(108,99,255,.18);
+outline-offset:-14px;
+animation:cardPop .35s ease-out;
+}
+
+@keyframes cardPop{
+from{opacity:0;transform:scale(.94) translateY(10px)}
+to{opacity:1;transform:scale(1) translateY(0)}
 }
 
 .hidden{display:none!important}
@@ -54,22 +87,24 @@ gap:15px;
 
 .big-button{
 border:0;
-border-radius:20px;
-padding:25px 15px;
-font-size:22px;
-font-weight:bold;
+border-radius:26px;
+padding:26px 15px;
+font-size:23px;
+font-weight:800;
+font-family:inherit;
 cursor:pointer;
 color:white;
-transition:.2s;
+transition:.18s;
 box-shadow:0 7px 0 rgba(0,0,0,.15);
+border:3px solid rgba(255,255,255,.55);
 }
 
 .big-button:hover{
-transform:translateY(-4px);
+transform:translateY(-4px) scale(1.03) rotate(-.5deg);
 }
 
 .big-button:active{
-transform:translateY(2px);
+transform:translateY(2px) scale(.98);
 box-shadow:0 3px 0 rgba(0,0,0,.15);
 }
 
@@ -259,17 +294,26 @@ gap:15px;
 .answer{
 border:0;
 padding:20px;
-border-radius:18px;
+border-radius:22px;
 background:#eef0ff;
 font-size:28px;
-font-weight:bold;
+font-weight:800;
+font-family:inherit;
 cursor:pointer;
 transition:.15s;
+box-shadow:0 6px 0 rgba(0,0,0,.08);
+border:3px solid rgba(255,255,255,.7);
 }
 
+.answer:nth-child(4n+1){background:linear-gradient(135deg,#a8e6ff,#7fd0ff);color:#0b4a73}
+.answer:nth-child(4n+2){background:linear-gradient(135deg,#ffd8f0,#ffb3e0);color:#7a1257}
+.answer:nth-child(4n+3){background:linear-gradient(135deg,#d4ffdb,#a6f0b3);color:#116b2c}
+.answer:nth-child(4n+4){background:linear-gradient(135deg,#fff3b0,#ffe082);color:#7a5c00}
+
 .answer:hover{
-background:#dcdfff;
-transform:scale(1.03);
+transform:scale(1.05) translateY(-2px);
+box-shadow:0 8px 0 rgba(0,0,0,.1);
+filter:brightness(1.05);
 }
 
 .answer:disabled{
@@ -288,10 +332,12 @@ color:white;
 
 .message{
 text-align:center;
-font-size:25px;
-font-weight:bold;
+font-size:27px;
+font-weight:800;
 min-height:38px;
 margin:15px;
+color:#4a2fb0;
+text-shadow:0 1px 0 rgba(255,255,255,.6);
 }
 
 .streak-fire{
@@ -376,11 +422,19 @@ font-size:26px;
 
 .badge{
 display:inline-block;
-padding:10px 18px;
+padding:12px 22px;
 border-radius:30px;
-background:#ffd32a;
+background:linear-gradient(135deg,#ffd32a,#ffb700);
 margin:10px;
-font-weight:bold;
+font-weight:800;
+font-size:19px;
+box-shadow:0 6px 0 rgba(0,0,0,.12);
+animation:badgeBounce 1s ease-in-out infinite;
+}
+
+@keyframes badgeBounce{
+0%,100%{transform:translateY(0) rotate(-1deg)}
+50%{transform:translateY(-6px) rotate(1deg)}
 }
 
 
@@ -506,19 +560,19 @@ font-size:clamp(32px,8vw,62px);
 
 .dart-5{
 left:50%;
-top:25%;
+top:37%;
 transform:translate(-50%,-50%);
 }
 
 .dart-3{
 left:50%;
-top:69%;
+top:76%;
 transform:translate(-50%,-50%);
 }
 
 .dart-0{
 left:50%;
-top:91%;
+top:94%;
 transform:translate(-50%,-50%);
 }
 
@@ -536,23 +590,23 @@ transform:translate(-50%,-50%);
 }
 
 .dart-ring.r1{
-width:13%;
-height:13%;
+width:41%;
+height:41%;
 }
 
 .dart-ring.r2{
-width:40%;
-height:40%;
+width:65%;
+height:65%;
 }
 
 .dart-ring.r3{
-width:64%;
-height:64%;
+width:80%;
+height:80%;
 }
 
 .dart-ring.r4{
-width:82%;
-height:82%;
+width:92%;
+height:92%;
 border:4px solid rgba(255,255,255,.65);
 }
 
@@ -1039,6 +1093,25 @@ height:34px;
 font-size:15px;
 }
 
+}
+
+.confetti-piece{
+position:fixed;
+top:-30px;
+z-index:9999;
+pointer-events:none;
+animation:confettiFall 1.6s ease-in forwards;
+}
+
+@keyframes confettiFall{
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(105vh) rotate(360deg);
+opacity:0;
+}
 }
 </style>
 </head>
@@ -1665,6 +1738,81 @@ let lastDistKey="";
 GAME INFO
 ========================= */
 
+/* =========================
+FUN MESSAGE BANKS
+========================= */
+
+function randomFrom(list){
+
+return list[
+Math.floor(Math.random()*list.length)
+];
+
+}
+
+const correctMessages=[
+"🎉 AWESOME!",
+"🌟 GREAT JOB!",
+"🎊 YOU GOT IT!",
+"💥 SUPER!",
+"🥳 NICE WORK!",
+"✨ BRILLIANT!",
+"🚀 BOOM! CORRECT!",
+"👏 WAY TO GO!"
+];
+
+const wrongMessages=[
+"💡 So close, try again!",
+"🤔 Not quite — keep going!",
+"😊 Almost had it!",
+"🔄 Nice try, next one!",
+"🌈 Keep shining, try again!"
+];
+
+const tooSlowMessages=[
+"⏰ TOO SLOW! Try again!",
+"⌛ Time's up — go faster!",
+"🐢 Almost! Speed it up!"
+];
+
+const distPerfectMessages=[
+"🎉 PERFECT!",
+"🌟 SPOT ON!",
+"🎊 ALL CORRECT!",
+"🥳 NAILED IT!"
+];
+
+const distTryAgainMessages=[
+"💡 Check the highlighted boxes!",
+"🤔 So close — peek at the red boxes!",
+"🔄 Almost there, try again!"
+];
+
+const dartBullseyeMessages=[
+"🎯🎯 BULLSEYE! +10 🎯🎯",
+"🔥🎯 PERFECT SHOT! +10",
+"🏆 INCREDIBLE! +10"
+];
+
+const dartFiveMessages=[
+"🔥 AMAZING! +5",
+"⭐ GREAT THROW! +5",
+"💪 NICE AIM! +5"
+];
+
+const dartThreeMessages=[
+"⭐ NICE HIT! +3",
+"👍 GOOD ONE! +3",
+"🙂 SOLID! +3"
+];
+
+const dartMissMessages=[
+"💨 MISS! +0",
+"😅 SO CLOSE! +0",
+"🌬️ JUST MISSED! +0"
+];
+
+
 const gameInfo={
 
 quick:{
@@ -1722,29 +1870,52 @@ questions:10
 STORAGE
 ========================= */
 
+let playersCache=null;
+
 function getPlayers(){
+
+if(playersCache){
+
+return playersCache;
+
+}
 
 try{
 
-return JSON.parse(
+playersCache=
+JSON.parse(
 localStorage.getItem("mathPlayers")
 )||{};
 
 }catch(error){
 
-return {};
+playersCache={};
 
 }
+
+return playersCache;
 
 }
 
 
 function savePlayers(players){
 
+playersCache=players;
+
+try{
+
 localStorage.setItem(
 "mathPlayers",
 JSON.stringify(players)
 );
+
+}catch(error){
+
+console.log(
+"Storage unavailable — progress will only last this session."
+);
+
+}
 
 }
 
@@ -2498,9 +2669,11 @@ score+=points;
 document
 .getElementById("message")
 .textContent=
-`🎉 CORRECT! +${points}`;
+`${randomFrom(correctMessages)} +${points}`;
 
 playSound(true);
+
+spawnConfetti(10);
 
 }else{
 
@@ -2522,7 +2695,7 @@ lives--;
 document
 .getElementById("message")
 .textContent=
-"💡 Not quite!";
+randomFrom(wrongMessages);
 
 playSound(false);
 
@@ -2600,7 +2773,7 @@ streak=0;
 document
 .getElementById("message")
 .textContent=
-"⏰ TOO SLOW!";
+randomFrom(tooSlowMessages);
 
 updateStats();
 
@@ -2743,6 +2916,8 @@ hideAll();
 document
 .getElementById("result")
 .classList.remove("hidden");
+
+spawnConfetti(30);
 
 const players=getPlayers();
 
@@ -3053,9 +3228,11 @@ distScore+=points;
 document
 .getElementById("distMessage")
 .textContent=
-`🎉 PERFECT! +${points}`;
+`${randomFrom(distPerfectMessages)} +${points}`;
 
 playSound(true);
+
+spawnConfetti(10);
 
 }else{
 
@@ -3064,7 +3241,7 @@ distStreak=0;
 document
 .getElementById("distMessage")
 .textContent=
-"💡 Check the highlighted boxes!";
+randomFrom(distTryAgainMessages);
 
 playSound(false);
 
@@ -3097,6 +3274,8 @@ hideAll();
 document
 .getElementById("result")
 .classList.remove("hidden");
+
+spawnConfetti(30);
 
 const players=getPlayers();
 
@@ -3628,28 +3807,30 @@ let text="";
 if(points===10){
 
 text=
-"🎯🎯 BULLSEYE! +10 🎯🎯";
+randomFrom(dartBullseyeMessages);
 
 playSound(true);
+
+spawnConfetti(20);
 
 }else if(points===5){
 
 text=
-"🔥 AMAZING! +5";
+randomFrom(dartFiveMessages);
 
 playSound(true);
 
 }else if(points===3){
 
 text=
-"⭐ NICE HIT! +3";
+randomFrom(dartThreeMessages);
 
 playSound(true);
 
 }else{
 
 text=
-"💨 MISS! +0";
+randomFrom(dartMissMessages);
 
 playSound(false);
 
@@ -3826,6 +4007,8 @@ hideAll();
 document
 .getElementById("dartResult")
 .classList.remove("hidden");
+
+spawnConfetti(30);
 
 document
 .getElementById("dartResultPlayer")
@@ -4275,6 +4458,57 @@ hideAll();
 document
 .getElementById("home")
 .classList.remove("hidden");
+
+}
+
+
+/* =========================
+CONFETTI
+========================= */
+
+function spawnConfetti(count){
+
+count=count||14;
+
+const emojis=
+["🎉","⭐","🎊","✨","🏆","🌟","💫"];
+
+for(let i=0;i<count;i++){
+
+const piece=
+document.createElement("div");
+
+piece.className=
+"confetti-piece";
+
+piece.textContent=
+emojis[
+Math.floor(
+Math.random()*emojis.length
+)
+];
+
+piece.style.left=
+(Math.random()*100)+"vw";
+
+piece.style.fontSize=
+(18+Math.random()*16)+"px";
+
+piece.style.animationDuration=
+(1.1+Math.random()*0.8)+"s";
+
+piece.style.animationDelay=
+(Math.random()*0.3)+"s";
+
+document.body.appendChild(piece);
+
+setTimeout(function(){
+
+piece.remove();
+
+},2400);
+
+}
 
 }
 
