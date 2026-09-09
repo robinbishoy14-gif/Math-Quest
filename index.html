@@ -90,6 +90,8 @@ from{box-shadow:0 7px 0 rgba(0,0,0,.15)}
 to{box-shadow:0 7px 0 rgba(255,20,147,.45),0 0 20px rgba(255,211,42,.4)}
 }
 
+.game8{background:linear-gradient(135deg,#00b894,#0984e3)}
+
 .study{background:linear-gradient(135deg,#10ac84,#1dd1a1)}
 .progress{background:linear-gradient(135deg,#3742fa,#5352ed)}
 
@@ -857,6 +859,110 @@ to{box-shadow:0 12px 0 #11152a,0 18px 40px rgba(255,20,147,.35),inset 0 0 0 6px 
 }
 
 
+/* =========================
+   DISTRIBUTIVE GAME
+========================= */
+
+.dist-question{
+background:#f4f4ff;
+border-radius:20px;
+padding:25px 20px;
+margin:15px 0;
+}
+
+.dist-tree{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:4px;
+max-width:480px;
+margin:0 auto;
+}
+
+.dist-mainall{
+font-size:34px;
+font-weight:bold;
+color:#202040;
+white-space:nowrap;
+}
+
+.dist-bracket{
+width:34px;
+height:110px;
+flex-shrink:0;
+}
+
+.dist-branch{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.dist-line{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:24px;
+font-weight:bold;
+color:#202040;
+flex-wrap:nowrap;
+}
+
+.dist-divider{
+border:0;
+border-top:2px solid #b9bce8;
+max-width:460px;
+margin:22px auto 18px;
+}
+
+.dist-altogether{
+display:flex;
+align-items:center;
+justify-content:space-between;
+max-width:460px;
+margin:0 auto;
+font-size:24px;
+font-weight:bold;
+color:#202040;
+}
+
+.dist-input{
+width:56px;
+height:48px;
+padding:4px;
+border:3px solid #9aa0e8;
+border-radius:8px;
+font-size:22px;
+text-align:center;
+font-weight:bold;
+font-family:inherit;
+background:white;
+}
+
+.dist-input:focus{
+border-color:#6c63ff;
+outline:0;
+}
+
+.dist-input.dist-small{
+width:48px;
+height:40px;
+font-size:19px;
+}
+
+.dist-input.correct{
+border-color:#2ecc71;
+background:#eafff1;
+color:#1a7a43;
+}
+
+.dist-input.wrong{
+border-color:#ff4757;
+background:#fff0f1;
+color:#c0392b;
+}
+
+
 @media(max-width:650px){
 
 header h1{font-size:34px}
@@ -901,6 +1007,36 @@ padding:12px 4px;
 
 .dart-board{
 width:min(94vw,500px);
+}
+
+.dist-mainall{
+font-size:24px;
+}
+
+.dist-bracket{
+width:24px;
+height:90px;
+}
+
+.dist-line{
+font-size:18px;
+gap:5px;
+}
+
+.dist-altogether{
+font-size:19px;
+}
+
+.dist-input{
+width:44px;
+height:40px;
+font-size:17px;
+}
+
+.dist-input.dist-small{
+width:38px;
+height:34px;
+font-size:15px;
 }
 
 }
@@ -959,7 +1095,7 @@ onclick="choosePlayer('streak')">
 onclick="choosePlayer('battle')">
 🎲 Number Battle
 <br>
-<small>Choose the winner</small>
+<small>Mixed random questions</small>
 </button>
 
 <button class="big-button game6"
@@ -974,6 +1110,13 @@ onclick="choosePlayer('dart')">
 🎯⚪ DART BALL
 <br>
 <small>10 balls • 10 / 5 / 3 / 0</small>
+</button>
+
+<button class="big-button game8"
+onclick="choosePlayer('distributive')">
+🧩 Distributive Game
+<br>
+<small>Split the multiplication</small>
 </button>
 
 <button class="big-button study"
@@ -1305,6 +1448,68 @@ onclick="goHome()">
 </div>
 
 
+<!-- DISTRIBUTIVE GAME -->
+
+<div id="distributiveGame" class="card hidden">
+
+<button class="back"
+onclick="goHome()">
+⬅ Back
+</button>
+
+<h2 class="game-title">
+🧩 Distributive Game
+</h2>
+
+<p class="game-description">
+Split the multiplication into two smaller ones!
+</p>
+
+<div class="player-name">
+👤 <span id="distPlayer"></span>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+⭐ Score
+<strong id="distScoreDisplay">0</strong>
+</div>
+
+<div class="stat">
+🔥 Streak
+<strong id="distStreakDisplay">0</strong>
+</div>
+
+<div class="stat">
+📋 Question
+<strong id="distQNum">1 / 10</strong>
+</div>
+
+</div>
+
+<div class="progress-track">
+<div id="distProgressBar"
+class="progress-bar">
+</div>
+</div>
+
+<div id="distQuestion">
+</div>
+
+<div id="distMessage"
+class="message">
+</div>
+
+<button
+id="distCheckBtn"
+class="new-player">
+✅ Check My Answer
+</button>
+
+</div>
+
+
 <!-- STUDY -->
 
 <div id="study" class="card hidden">
@@ -1443,6 +1648,20 @@ let dartMovingTime=0;
 
 
 /* =========================
+DISTRIBUTIVE VARIABLES
+========================= */
+
+let distScore=0;
+let distStreak=0;
+let distQuestionNumber=0;
+const distTotalQuestions=4;
+let distCurrentAnswers={};
+let lastQuickKey="";
+let lastMissingKey="";
+let lastDistKey="";
+
+
+/* =========================
 GAME INFO
 ========================= */
 
@@ -1450,8 +1669,8 @@ const gameInfo={
 
 quick:{
 title:"🎯 Quick Game",
-description:"Answer 20 multiplication questions!",
-questions:20
+description:"Answer 10 multiplication questions!",
+questions:10
 },
 
 time:{
@@ -1463,30 +1682,36 @@ questions:999
 missing:{
 title:"🧠 Missing Number",
 description:"Find the mystery number!",
-questions:20
+questions:10
 },
 
 streak:{
 title:"🔥 Streak Master",
 description:"Build the biggest streak!",
-questions:30
+questions:10
 },
 
 battle:{
 title:"🎲 Number Battle",
-description:"Choose the correct answer!",
-questions:20
+description:"Mixed random questions — multiply, missing number & splits!",
+questions:10
 },
 
 speed:{
 title:"🚀 Speed Round",
 description:"You only have 5 seconds!",
-questions:15
+questions:10
 },
 
 dart:{
 title:"🎯 Dart Ball",
 description:"10 throws — hit 10, 5, 3 or 0!",
+questions:10
+},
+
+distributive:{
+title:"🧩 Distributive Game",
+description:"Split each multiplication into two smaller ones!",
 questions:10
 }
 
@@ -1557,6 +1782,25 @@ displayPlayers();
 }
 
 
+function launchSelectedGame(){
+
+if(selectedGame==="dart"){
+
+startDartGame();
+
+}else if(selectedGame==="distributive"){
+
+startDistributiveGame();
+
+}else{
+
+startGame();
+
+}
+
+}
+
+
 function displayPlayers(){
 
 const list=
@@ -1616,15 +1860,7 @@ button.onclick=function(){
 
 currentPlayer=name;
 
-if(selectedGame==="dart"){
-
-startDartGame();
-
-}else{
-
-startGame();
-
-}
+launchSelectedGame();
 
 };
 
@@ -1695,15 +1931,7 @@ if(existing){
 
 currentPlayer=existing;
 
-if(selectedGame==="dart"){
-
-startDartGame();
-
-}else{
-
-startGame();
-
-}
+launchSelectedGame();
 
 return;
 
@@ -1715,15 +1943,7 @@ savePlayers(players);
 
 currentPlayer=name;
 
-if(selectedGame==="dart"){
-
-startDartGame();
-
-}else{
-
-startGame();
-
-}
+launchSelectedGame();
 
 }
 
@@ -1844,7 +2064,7 @@ if(answering)return;
 
 if(
 selectedGame==="quick" &&
-questionNumber>=20
+questionNumber>=10
 ){
 
 endGame();
@@ -1855,7 +2075,7 @@ return;
 
 if(
 selectedGame==="missing" &&
-questionNumber>=20
+questionNumber>=10
 ){
 
 endGame();
@@ -1866,7 +2086,7 @@ return;
 
 if(
 selectedGame==="streak" &&
-questionNumber>=30
+questionNumber>=10
 ){
 
 endGame();
@@ -1877,7 +2097,7 @@ return;
 
 if(
 selectedGame==="battle" &&
-questionNumber>=20
+questionNumber>=10
 ){
 
 endGame();
@@ -1888,7 +2108,7 @@ return;
 
 if(
 selectedGame==="speed" &&
-questionNumber>=15
+questionNumber>=10
 ){
 
 endGame();
@@ -1913,6 +2133,10 @@ if(selectedGame==="missing"){
 
 makeMissingQuestion();
 
+}else if(selectedGame==="battle"){
+
+makeBattleQuestion();
+
 }else{
 
 makeNormalQuestion();
@@ -1930,21 +2154,30 @@ NORMAL QUESTION
 
 function makeNormalQuestion(){
 
-let max=10;
+const max=10;
 
-if(selectedGame==="battle"){
-max=12;
-}
+let a,b,key;
 
-const a=
+do{
+
+a=
 Math.floor(
 Math.random()*(max+1)
 );
 
-const b=
+b=
 Math.floor(
 Math.random()*(max+1)
 );
+
+key=a+"x"+b;
+
+}while(
+key===lastQuickKey &&
+selectedGame==="quick"
+);
+
+lastQuickKey=key;
 
 correctAnswer=a*b;
 
@@ -1959,10 +2192,62 @@ createAnswers();
 
 
 /* =========================
-MISSING
+NUMBER BATTLE
 ========================= */
 
-function makeMissingQuestion(){
+function makeBattleQuestion(){
+
+const type=
+Math.floor(Math.random()*3);
+
+if(type===0){
+
+battleMultiplyQuestion();
+
+}else if(type===1){
+
+battleMissingQuestion();
+
+}else{
+
+battleDistributiveQuestion();
+
+}
+
+}
+
+
+/*
+Style 1: plain multiplication,
+like the Quick Game.
+*/
+
+function battleMultiplyQuestion(){
+
+const a=
+Math.floor(Math.random()*11);
+
+const b=
+Math.floor(Math.random()*11);
+
+correctAnswer=a*b;
+
+document
+.getElementById("question")
+.textContent=
+`${a} × ${b} = ?`;
+
+createAnswers();
+
+}
+
+
+/*
+Style 2: missing factor,
+like Missing Number.
+*/
+
+function battleMissingQuestion(){
 
 const a=
 Math.floor(Math.random()*11);
@@ -1971,6 +2256,90 @@ const b=
 Math.floor(Math.random()*11);
 
 if(Math.random()<0.5){
+
+correctAnswer=a;
+
+document
+.getElementById("question")
+.textContent=
+`? × ${b} = ${a*b}`;
+
+}else{
+
+correctAnswer=b;
+
+document
+.getElementById("question")
+.textContent=
+`${a} × ? = ${a*b}`;
+
+}
+
+createAnswers();
+
+}
+
+
+/*
+Style 3: missing split number,
+like the Distributive Game's
+tree diagrams.
+*/
+
+function battleDistributiveQuestion(){
+
+const a=
+Math.floor(Math.random()*6)+4;
+/* 4..9 */
+
+const b=
+Math.floor(Math.random()*7)+3;
+/* 3..9 */
+
+const x=
+Math.floor(Math.random()*(a-1))+1;
+/* 1..a-1 */
+
+const y=a-x;
+
+correctAnswer=y;
+
+document
+.getElementById("question")
+.innerHTML=
+`<div style="font-size:38px">${a} × ${b} = (${x} × ${b}) + (? × ${b})</div>`;
+
+createAnswers();
+
+}
+
+
+/* =========================
+MISSING
+========================= */
+
+function makeMissingQuestion(){
+
+let a,b,side,key;
+
+do{
+
+a=
+Math.floor(Math.random()*11);
+
+b=
+Math.floor(Math.random()*11);
+
+side=
+Math.random()<0.5?"a":"b";
+
+key=a+"x"+b+"x"+side;
+
+}while(key===lastMissingKey);
+
+lastMissingKey=key;
+
+if(side==="a"){
 
 correctAnswer=a;
 
@@ -2357,6 +2726,418 @@ Math.min(
 percent,
 100
 )+"%";
+
+}
+
+
+/* =========================
+END NORMAL GAME
+========================= */
+
+function endGame(){
+
+clearInterval(timerInterval);
+
+hideAll();
+
+document
+.getElementById("result")
+.classList.remove("hidden");
+
+const players=getPlayers();
+
+const oldBest=
+players[currentPlayer]||0;
+
+const newRecord=
+score>oldBest;
+
+if(newRecord){
+
+players[currentPlayer]=score;
+
+savePlayers(players);
+
+}
+
+document
+.getElementById("resultText")
+.innerHTML=`
+
+<div style="font-size:22px;margin:10px">
+👤 <b>${escapeHTML(currentPlayer)}</b>
+</div>
+
+<div style="font-size:30px;font-weight:bold;color:#5548d9;margin:10px">
+⭐ Score: ${score}
+</div>
+
+<div style="font-size:20px;margin:10px">
+🏆 Best: ${Math.max(score,oldBest)}
+</div>
+
+`;
+
+document
+.getElementById("badge")
+.innerHTML=
+newRecord
+?'<div class="badge">👑 NEW RECORD!</div>'
+:'<div class="badge">💪 GREAT JOB!</div>';
+
+}
+
+
+/* ==================================================
+DISTRIBUTIVE GAME
+================================================== */
+
+function startDistributiveGame(){
+
+clearInterval(timerInterval);
+
+stopDart();
+
+distScore=0;
+distStreak=0;
+distQuestionNumber=0;
+
+hideAll();
+
+document
+.getElementById("distributiveGame")
+.classList.remove("hidden");
+
+document
+.getElementById("distPlayer")
+.textContent=
+currentPlayer;
+
+document
+.getElementById("distMessage")
+.textContent="";
+
+document
+.getElementById("distProgressBar")
+.style.width="0%";
+
+updateDistStats();
+
+nextDistributiveQuestion();
+
+}
+
+
+function updateDistStats(){
+
+document
+.getElementById("distScoreDisplay")
+.textContent=
+distScore;
+
+document
+.getElementById("distStreakDisplay")
+.textContent=
+distStreak;
+
+}
+
+
+/* =========================
+NEXT DISTRIBUTIVE QUESTION
+========================= */
+
+function nextDistributiveQuestion(){
+
+if(distQuestionNumber>=distTotalQuestions){
+
+endDistributiveGame();
+
+return;
+
+}
+
+distQuestionNumber++;
+
+document
+.getElementById("distQNum")
+.textContent=
+distQuestionNumber+
+" / "+
+distTotalQuestions;
+
+document
+.getElementById("distProgressBar")
+.style.width=
+((distQuestionNumber-1)/
+distTotalQuestions*100)+"%";
+
+document
+.getElementById("distMessage")
+.textContent="";
+
+renderDistributiveQuestion();
+
+const checkButton=
+document.getElementById("distCheckBtn");
+
+checkButton.disabled=false;
+
+checkButton.textContent=
+"✅ Check My Answer";
+
+checkButton.onclick=
+checkDistributive;
+
+}
+
+
+/* =========================
+RENDER DISTRIBUTIVE QUESTION
+========================= */
+
+function renderDistributiveQuestion(){
+
+/*
+Pick a×b, then split a into
+x + y so the player fills in
+the missing pieces of the
+distributive breakdown, just
+like the worksheet's tree
+diagrams.
+*/
+
+let a,b,x,y,key;
+
+do{
+
+a=
+Math.floor(Math.random()*6)+4;
+/* 4..9 */
+
+b=
+Math.floor(Math.random()*7)+3;
+/* 3..9 */
+
+x=
+Math.floor(Math.random()*(a-1))+1;
+/* 1..a-1 */
+
+y=a-x;
+
+key=a+"x"+b+"x"+x;
+
+}while(key===lastDistKey);
+
+lastDistKey=key;
+
+const hideX=
+Math.random()<0.5;
+
+const leftLabel=
+hideX
+?`<input class="dist-input dist-small" data-id="split" inputmode="numeric">`
+:x;
+
+const rightLabel=
+hideX
+?y
+:`<input class="dist-input dist-small" data-id="split" inputmode="numeric">`;
+
+distCurrentAnswers={
+p1:x*b,
+p2:y*b,
+total:a*b,
+split:hideX?x:y
+};
+
+const container=
+document.getElementById("distQuestion");
+
+container.innerHTML=`
+
+<div class="dist-question">
+
+<div class="dist-tree">
+
+<div class="dist-mainall">
+${a} × ${b}
+</div>
+
+<svg class="dist-bracket" viewBox="0 0 34 110" xmlns="http://www.w3.org/2000/svg">
+<path d="M4,55 L30,12 M4,55 L30,98" stroke="#202040" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<div class="dist-branch">
+
+<div class="dist-line">
+${leftLabel} × ${b} =
+<input class="dist-input" data-id="p1" inputmode="numeric">
+</div>
+
+<div class="dist-line">
+${rightLabel} × ${b} =
+<input class="dist-input" data-id="p2" inputmode="numeric">
+</div>
+
+</div>
+
+</div>
+
+<hr class="dist-divider">
+
+<div class="dist-altogether">
+<span>Altogether</span>
+<input class="dist-input" data-id="total" inputmode="numeric">
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+CHECK DISTRIBUTIVE
+========================= */
+
+function checkDistributive(){
+
+const inputs=
+document.querySelectorAll(
+"#distQuestion .dist-input"
+);
+
+let allCorrect=true;
+
+inputs.forEach(function(input){
+
+const id=
+input.dataset.id;
+
+const expected=
+distCurrentAnswers[id];
+
+const value=
+parseInt(input.value,10);
+
+input.disabled=true;
+
+if(
+input.value.trim()===""||
+value!==expected
+){
+
+allCorrect=false;
+
+input.classList.add("wrong");
+
+}else{
+
+input.classList.add("correct");
+
+}
+
+});
+
+if(allCorrect){
+
+distStreak++;
+
+const points=
+10+(distStreak*2);
+
+distScore+=points;
+
+document
+.getElementById("distMessage")
+.textContent=
+`🎉 PERFECT! +${points}`;
+
+playSound(true);
+
+}else{
+
+distStreak=0;
+
+document
+.getElementById("distMessage")
+.textContent=
+"💡 Check the highlighted boxes!";
+
+playSound(false);
+
+}
+
+updateDistStats();
+
+const checkButton=
+document.getElementById("distCheckBtn");
+
+checkButton.textContent=
+distQuestionNumber>=distTotalQuestions
+?"🏁 See Results"
+:"➡ Next Question";
+
+checkButton.onclick=
+nextDistributiveQuestion;
+
+}
+
+
+/* =========================
+END DISTRIBUTIVE GAME
+========================= */
+
+function endDistributiveGame(){
+
+hideAll();
+
+document
+.getElementById("result")
+.classList.remove("hidden");
+
+const players=getPlayers();
+
+const oldBest=
+players[currentPlayer]||0;
+
+const newRecord=
+distScore>oldBest;
+
+if(newRecord){
+
+players[currentPlayer]=distScore;
+
+savePlayers(players);
+
+}
+
+document
+.getElementById("resultText")
+.innerHTML=`
+
+<div style="font-size:22px;margin:10px">
+👤 <b>${escapeHTML(currentPlayer)}</b>
+</div>
+
+<div style="font-size:30px;font-weight:bold;color:#5548d9;margin:10px">
+⭐ Score: ${distScore}
+</div>
+
+<div style="font-size:20px;margin:10px">
+🏆 Best: ${Math.max(distScore,oldBest)}
+</div>
+
+`;
+
+document
+.getElementById("badge")
+.innerHTML=
+newRecord
+?'<div class="badge">👑 NEW RECORD!</div>'
+:'<div class="badge">💪 GREAT JOB!</div>';
 
 }
 
@@ -3154,6 +3935,14 @@ return;
 
 }
 
+if(selectedGame==="distributive"){
+
+startDistributiveGame();
+
+return;
+
+}
+
 startGame();
 
 }
@@ -3446,6 +4235,7 @@ const pages=[
 "game",
 "dartGame",
 "dartResult",
+"distributiveGame",
 "study",
 "progressPage",
 "result"
