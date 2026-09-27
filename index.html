@@ -127,6 +127,8 @@ to{box-shadow:0 7px 0 rgba(255,20,147,.45),0 0 20px rgba(255,211,42,.4)}
 
 .game8{background:linear-gradient(135deg,#00b894,#0984e3)}
 
+.game9{background:linear-gradient(135deg,#e17055,#d63031)}
+
 .study{background:linear-gradient(135deg,#10ac84,#1dd1a1)}
 .progress{background:linear-gradient(135deg,#3742fa,#5352ed)}
 
@@ -438,6 +440,8 @@ animation:badgeBounce 1s ease-in-out infinite;
 }
 
 
+.time-adventure-badge{display:inline-block;padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,#ffd32a,#ff9f43);color:#5b3a00;font-weight:900;box-shadow:0 4px 0 rgba(0,0,0,.12);animation:badgeBounce 1.4s ease-in-out infinite;}
+
 /* =========================
    DART GAME
 ========================= */
@@ -510,20 +514,14 @@ touch-action:none;
 background:
 radial-gradient(
 circle,
-#ff315b 0%,
-#ff315b 11%,
-#ffd32a 11.5%,
-#ffd32a 19%,
-#2ed573 19.5%,
-#2ed573 31%,
-#ff4757 31.5%,
-#ff4757 45%,
-#3742fa 45.5%,
-#3742fa 62%,
-#ff9f43 62.5%,
-#ff9f43 78%,
-#20bf6b 78.5%,
-#20bf6b 100%
+#ff4757 0%,
+#ff4757 25%,
+#ffd32a 25.5%,
+#ffd32a 50%,
+#2ed573 50.5%,
+#2ed573 75%,
+#3742fa 75.5%,
+#3742fa 100%
 );
 
 border:12px solid #202040;
@@ -1093,6 +1091,20 @@ height:34px;
 font-size:15px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 .confetti-piece{
@@ -1113,6 +1125,29 @@ transform:translateY(105vh) rotate(360deg);
 opacity:0;
 }
 }
+
+/* ===== PHYSICS TUG-OF-WAR ===== */
+.tug-physics-arena{
+ position:relative; height:620px; margin:20px 0; overflow:hidden; border-radius:28px;
+ background:linear-gradient(#dff1ff 0 58%,#91c56b 58% 100%);
+ border:3px solid #d6e0ea; box-shadow:inset 0 -20px 0 rgba(0,0,0,.06);
+}
+.tug-ground{position:absolute;left:0;right:0;bottom:34px;height:7px;background:rgba(42,62,32,.35);border-radius:50%;z-index:1}
+.tug-center-line{position:absolute;top:34px;bottom:35px;left:50%;border-left:3px dashed rgba(80,80,80,.18);z-index:1}
+.tug-player{position:absolute;top:35%;width:145px;height:175px;transform:translate(-50%,-50%);z-index:5;will-change:left,transform;}
+.tug-player-red{transform:translate(-50%,-50%) rotate(-8deg)}
+.tug-player-blue{transform:translate(-50%,-50%) rotate(8deg) scaleX(-1)}
+.tug-person-img{width:145px;height:175px;object-fit:contain;display:block;filter:drop-shadow(0 10px 5px rgba(0,0,0,.25));}
+.tug-person-shadow{position:absolute;left:50%;bottom:0;width:125px;height:22px;transform:translateX(-50%);background:rgba(0,0,0,.22);border-radius:50%;filter:blur(5px);z-index:-1}
+.tug-name{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%) scaleX(1);padding:4px 12px;border-radius:12px;background:white;box-shadow:0 3px 8px rgba(0,0,0,.18);font-size:13px;letter-spacing:2px;}
+.red-name{color:#d52e3d}.blue-name{color:#284bd8}
+.tug-rope-physics{position:absolute;top:35%;left:50%;width:70%;height:35px;transform:translate(-50%,-50%);z-index:4;pointer-events:none;will-change:left}
+.tug-rope-line{position:absolute;top:50%;left:-50%;width:200%;height:14px;transform:translateY(-50%);border-radius:10px;background:repeating-linear-gradient(90deg,#9c5724 0 12px,#d69a57 12px 20px);border:2px solid #713b17;box-shadow:0 5px 5px rgba(0,0,0,.22)}
+.tug-rope-knot{position:absolute;top:50%;left:50%;font-size:40px;transform:translate(-50%,-50%);filter:drop-shadow(0 3px 2px rgba(0,0,0,.25));will-change:transform}
+.tug-question-panel{position:absolute;bottom:16px;width:43%;padding:10px;border-radius:18px;background:rgba(255,255,255,.97);box-shadow:0 8px 22px rgba(0,0,0,.18);z-index:10;text-align:center;box-sizing:border-box}
+.tug-question-red{left:2%;border:4px solid #ff4757}.tug-question-blue{right:2%;border:4px solid #3742fa}
+.tug-team-label{font-weight:900;font-size:14px;margin-bottom:3px}.tug-question-red .tug-team-label{color:#c0392b}.tug-question-blue .tug-team-label{color:#1e2a9e}
+
 </style>
 </head>
 
@@ -1120,19 +1155,56 @@ opacity:0;
 
 <header>
 <h1>🚀 Math Quest</h1>
-<p>🎓 Grade 3 Multiplication Adventure</p>
+<p>🎓 Grade 3 Learning Adventure</p>
 </header>
 
 <div class="container">
 
 
-<!-- HOME -->
+<!-- UNIT SELECT -->
 
-<div id="home" class="card">
+<div id="unitSelect" class="card">
+
+<h2 style="text-align:center">
+🎈 Choose Your Unit!
+</h2>
+
+<p style="text-align:center">
+Pick an adventure to begin!
+</p>
+
+<div class="menu">
+
+<button class="big-button game1"
+onclick="selectUnit('1')">
+🔢 Unit 1
+<br>
+<small>Multiplication Games</small>
+</button>
+
+<button class="big-button game6"
+onclick="selectUnit('2')">
+⏰ Unit 2
+<br>
+<small>Time Games</small>
+</button>
+
+</div>
+</div>
+
+
+<!-- HOME (UNIT 1) -->
+
+<div id="home" class="card hidden">
+
+<button class="back"
+onclick="backToUnits()">
+⬅ Units
+</button>
 
 <h2>🌟 Welcome, Math Explorer!</h2>
 
-<p>Choose a game and become a multiplication champion!</p>
+<p>🔢 Unit 1 · Choose a game and become a multiplication champion!</p>
 
 <div class="menu">
 
@@ -1161,7 +1233,7 @@ onclick="choosePlayer('missing')">
 onclick="choosePlayer('streak')">
 🔥 Streak Master
 <br>
-<small>Build your streak</small>
+<small>1 life — no mistakes!</small>
 </button>
 
 <button class="big-button game5"
@@ -1192,11 +1264,51 @@ onclick="choosePlayer('distributive')">
 <small>Split the multiplication</small>
 </button>
 
+<button class="big-button game9"
+onclick="startTugGame()">
+🪢 Pull the Rope
+<br>
+<small>2 players — Red vs Blue!</small>
+</button>
+
 <button class="big-button study"
 onclick="openStudy()">
 📚 Study Tables
 <br>
 <small>Tables 0–10</small>
+</button>
+
+<button class="big-button progress"
+onclick="openProgress()">
+🏆 My Progress
+<br>
+<small>Best scores</small>
+</button>
+
+</div>
+</div>
+
+
+<!-- UNIT 2 HOME -->
+
+<div id="unit2Home" class="card hidden">
+
+<button class="back"
+onclick="backToUnits()">
+⬅ Units
+</button>
+
+<h2>⏰ Welcome, Time Traveler!</h2>
+
+<p>🕐 Unit 2 · Master the clock with fun time puzzles!</p>
+
+<div class="menu">
+
+<button class="big-button game2"
+onclick="choosePlayer('clock')">
+⏰🚀 Time Trip
+<br>
+<small>12 missions • streak bonuses • ⏰ TIME ADVENTURE</small>
 </button>
 
 <button class="big-button progress"
@@ -1835,7 +1947,7 @@ questions:10
 
 streak:{
 title:"🔥 Streak Master",
-description:"Build the biggest streak!",
+description:"Build the biggest streak! Just 1 life — no mistakes!",
 questions:10
 },
 
@@ -1861,6 +1973,12 @@ distributive:{
 title:"🧩 Distributive Game",
 description:"Split each multiplication into two smaller ones!",
 questions:10
+},
+
+clock:{
+title:"⏰ Time Adventure",
+description:"Race through fun time missions, build streaks, and earn bonus points!",
+questions:12
 }
 
 };
@@ -2146,7 +2264,8 @@ stopDart();
 
 score=0;
 streak=0;
-lives=3;
+lives=
+selectedGame==="streak"?1:3;
 
 questionNumber=0;
 correctAnswer=0;
@@ -2288,6 +2407,17 @@ return;
 
 }
 
+if(
+selectedGame==="clock" &&
+questionNumber>=10
+){
+
+endGame();
+
+return;
+
+}
+
 if(lives<=0){
 
 endGame();
@@ -2307,6 +2437,10 @@ makeMissingQuestion();
 }else if(selectedGame==="battle"){
 
 makeBattleQuestion();
+
+}else if(selectedGame==="clock"){
+
+makeClockQuestion();
 
 }else{
 
@@ -2486,8 +2620,175 @@ createAnswers();
 
 
 /* =========================
-MISSING
+TIME TRIP (CLOCK GAME)
 ========================= */
+
+const clockTemplates=[
+"🕐 It is <b>{time}</b>. After <b>{add}</b> minutes, what time will it be?",
+"🚀 Blast-off is at <b>{time}</b>! Launch gets delayed <b>{add}</b> minutes — what's the new time?",
+"🍕 Pizza is ready at <b>{time}</b>! You wait <b>{add}</b> more minutes — what time do you eat?",
+"🎮 Game night starts at <b>{time}</b>. Warm-up takes <b>{add}</b> minutes — what time do you begin playing?",
+"🐶 Walkies start at <b>{time}</b>. <b>{add}</b> minutes later, what time is it?",
+"🎨 Art class starts at <b>{time}</b>. Clean-up adds <b>{add}</b> minutes — what time do you finish?",
+"🚌 The bus leaves at <b>{time}</b>. It's running <b>{add}</b> minutes late — what time will it leave?",
+"🎂 The party starts at <b>{time}</b>! Cake time is <b>{add}</b> minutes later — what time is that?",
+"🏊 Swim class begins at <b>{time}</b>. Add <b>{add}</b> minutes of splash time — what time is it now?",
+"🦊 Your fox adventure starts at <b>{time}</b>! Travel for <b>{add}</b> minutes — what time do you arrive?",
+"🎢 The roller coaster starts at <b>{time}</b>! The ride takes <b>{add}</b> minutes — when does it finish?",
+"🏆 BONUS MISSION! The treasure hunt starts at <b>{time}</b>. Add <b>{add}</b> minutes — what time is the next clue?"
+];
+
+function pad2(number){
+
+return number<10?"0"+number:""+number;
+
+}
+
+function formatClock(hour,minute){
+
+return hour+":"+pad2(minute);
+
+}
+
+function makeClockQuestion(){
+
+const startHour=
+Math.floor(Math.random()*12)+1;
+
+const minuteOptions=
+[0,5,10,15,20,25,30,35,40,45,50,55];
+
+const startMin=
+minuteOptions[
+Math.floor(Math.random()*minuteOptions.length)
+];
+
+const addOptions=
+[5,10,15,20,25,30,35,40,45,50,55];
+
+const addMin=
+addOptions[
+Math.floor(Math.random()*addOptions.length)
+];
+
+const totalMin=
+startMin+addMin;
+
+const carryHours=
+Math.floor(totalMin/60);
+
+const newMin=
+totalMin%60;
+
+let newHour=
+((startHour-1+carryHours)%12)+1;
+
+correctAnswer=
+formatClock(newHour,newMin);
+
+const template=
+randomFrom(clockTemplates);
+
+const startTimeStr=
+formatClock(startHour,startMin);
+
+const questionText=
+template
+.replace("{time}",startTimeStr)
+.replace("{add}",addMin);
+
+document
+.getElementById("question")
+.innerHTML=
+`<div style="font-size:26px;line-height:1.5">${questionText}</div>`;
+
+/*
+Build 4 unique time
+choices — 1 correct plus
+3 plausible nearby times.
+*/
+
+const referenceTotal=
+(newHour%12)*60+newMin;
+
+const choiceSet=
+new Set([correctAnswer]);
+
+const offsetPool=
+[-20,-15,-10,-5,5,10,15,20,25,-25];
+
+let guard=0;
+
+while(
+choiceSet.size<4 &&
+guard<60
+){
+
+guard++;
+
+const offset=
+offsetPool[
+Math.floor(Math.random()*offsetPool.length)
+];
+
+let total=
+(referenceTotal+offset)%720;
+
+if(total<0){
+
+total+=720;
+
+}
+
+let hour=
+Math.floor(total/60);
+
+const minute=
+total%60;
+
+hour=
+hour===0?12:hour;
+
+choiceSet.add(
+formatClock(hour,minute)
+);
+
+}
+
+const choices=
+Array.from(choiceSet)
+.sort(function(){
+
+return Math.random()-.5;
+
+});
+
+const container=
+document.getElementById("answers");
+
+container.innerHTML="";
+
+choices.forEach(function(choiceStr){
+
+const button=
+document.createElement("button");
+
+button.className="answer";
+
+button.textContent=
+"🕐 "+choiceStr;
+
+button.onclick=function(){
+
+checkAnswer(choiceStr,button);
+
+};
+
+container.appendChild(button);
+
+});
+
+}
 
 function makeMissingQuestion(){
 
@@ -2664,12 +2965,18 @@ if(selectedGame==="time"){
 points=10+streak;
 }
 
+if(selectedGame==="clock"){
+points=15+streak+(streak>=3?5:0);
+}
+
 score+=points;
 
 document
 .getElementById("message")
 .textContent=
-`${randomFrom(correctMessages)} +${points}`;
+selectedGame==="clock"
+? `${randomFrom(["⏰ PERFECT TIMING!","🚀 TIME MASTER!","🕐 CLOCK CHAMPION!","⭐ TIME BONUS!"])} +${points}${streak>=3?" 🔥 +STREAK BONUS":""}`
+: `${randomFrom(correctMessages)} +${points}`;
 
 playSound(true);
 
@@ -2685,7 +2992,8 @@ if(
 selectedGame==="quick" ||
 selectedGame==="missing" ||
 selectedGame==="battle" ||
-selectedGame==="streak"
+selectedGame==="streak" ||
+selectedGame==="clock"
 ){
 
 lives--;
@@ -4413,7 +4721,9 @@ function hideAll(){
 
 const pages=[
 
+"unitSelect",
 "home",
+"unit2Home",
 "playerScreen",
 "game",
 "dartGame",
@@ -4442,6 +4752,35 @@ element.classList.add("hidden");
 
 
 /* =========================
+UNITS
+========================= */
+
+let currentUnitPage="unitSelect";
+
+function selectUnit(unit){
+
+currentUnitPage=
+unit==="2"?"unit2Home":"home";
+
+hideAll();
+
+document
+.getElementById(currentUnitPage)
+.classList.remove("hidden");
+
+}
+
+
+function backToUnits(){
+
+currentUnitPage="unitSelect";
+
+goHome();
+
+}
+
+
+/* =========================
 HOME
 ========================= */
 
@@ -4456,7 +4795,7 @@ answering=false;
 hideAll();
 
 document
-.getElementById("home")
+.getElementById(currentUnitPage)
 .classList.remove("hidden");
 
 }
@@ -4588,6 +4927,4 @@ START
 goHome();
 
 </script>
-
-</body>
-</html>
+</body></html>
